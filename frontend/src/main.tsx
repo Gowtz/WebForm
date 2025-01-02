@@ -10,6 +10,7 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>,
