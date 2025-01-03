@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { CONFIG } from "@/lib/config";
 import { Label } from "@radix-ui/react-label";
 export default function SignUp() {
   return (
@@ -16,13 +17,25 @@ export default function SignUp() {
           Submit
         </Button>
         <h2 className="text-center my-3">or</h2>
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 w-full">
           <Button variant="secondary">
-            <img src="/google.svg" alt="google" width={24} />
-            Google
+            <a
+              href={`${CONFIG.BACKEND_URL}/api/auth/google`}
+              className="w-full flex items-center justify-center gap-3"
+            >
+              <img src="/google.svg" alt="google" width={24} />
+              <span>Google</span>
+            </a>
           </Button>
-          <Button>
-            <img src="/github.png" alt="Github" width={20} /> Github
+
+          <Button className="w-full">
+            <a
+              href={`${CONFIG.BACKEND_URL}/api/auth/github`}
+              className="w-full flex items-center justify-center gap-3"
+            >
+              <img src="/github.png" alt="Github" width={20} />{" "}
+              <span>Github</span>
+            </a>
           </Button>
         </div>
       </div>

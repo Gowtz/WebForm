@@ -3,6 +3,11 @@ import { useState } from "react";
 import { cn } from "./lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./components/ui/button";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUser } from "@/action/fetchUser";
+import { RootState } from "@/redux/store";
+
 // Animation variants
 const heading1Variants = {
   hidden: { opacity: 0, y: 50 },
@@ -19,25 +24,43 @@ const image = {
   visible: { opacity: 1, y: 0, transition: { duration: 1.2 } },
 };
 export default function App() {
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+
+  useEffect(() => {
+    //@ts-ignore
+    dispatch(fetchUser()); // Fetch user details on app load
+  }, [dispatch]);
   const [toggleMobile, setToggleMobile] = useState<boolean>(false);
   return (
     <>
-      <header className="absolute top-0 left-0 h-24 w-full border bg-white">
+      <header className="absolute top-0 left-0 h-24 w-full border bg-white z-50">
         <nav className="px-7 md:px-20 flex items-center justify-between w-full h-full ">
           <div className="logo text-2xl font-semibold lg:text-2xl w-full">
-            <a href="#">Web Forms</a>
+            <a href="/">Web Forms</a>
           </div>
 
           <ul className="hidden navlink md:flex items-center gap-7">
             <li>
               <a href="#">Docs</a>
             </li>
-            <li>
-              <a href="#">Login</a>
-            </li>
-            <li>
-              <a href="#">Signup</a>
-            </li>
+            {!isAuthenticated && (
+              <>
+                <li>
+                  <a href="/auth?type=signin">Login</a>
+                </li>
+                <li>
+                  <a href="/auth?type=signup">Signup</a>
+                </li>
+              </>
+            )}
+            {isAuthenticated && (
+              <>
+                <li>
+                  <a href="/dashboard">Dashboard</a>
+                </li>
+              </>
+            )}
           </ul>
           <AnimatePresence>
             {toggleMobile && (
@@ -47,18 +70,29 @@ export default function App() {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className={cn(
-                  "absolute top-24 w-full -mx-7 py-10 gap-7 px-10  flex flex-col  items-start  bg-slate-100 -z-10",
+                  "absolute md:hidden top-24 w-full -mx-7 py-10 gap-7 px-10  flex flex-col  items-start  bg-slate-100 z-10",
                 )}
               >
                 <li>
                   <a href="#">Docs</a>
                 </li>
-                <li>
-                  <a href="#">Login</a>
-                </li>
-                <li>
-                  <a href="#">Signup</a>
-                </li>
+                {!isAuthenticated && (
+                  <>
+                    <li>
+                      <motion.a href="/auth?type=signin">Login</motion.a>
+                    </li>
+                    <li>
+                      <motion.a href="/auth?type=signup">Signup</motion.a>
+                    </li>
+                  </>
+                )}
+                {isAuthenticated && (
+                  <>
+                    <li>
+                      <motion.a href="/dashboard">Dashboard</motion.a>
+                    </li>
+                  </>
+                )}
               </motion.ul>
             )}
           </AnimatePresence>

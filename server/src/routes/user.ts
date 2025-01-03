@@ -21,7 +21,7 @@ router.get(
   passport.authenticate("google", { failureRedirect: "/not-authenticated" }),
   (req, res) => {
     console.log(req.user);
-    res.send(`DONE`);
+    res.redirect(process.env.FRONT_URL as string);
   },
 );
 
@@ -36,9 +36,8 @@ router.get(
 router.get(
   "/callback/github",
   passport.authenticate("github", { failureRedirect: "/not-authenticated" }),
-  (req, res) => {
-    console.log(req.user);
-    res.send(`Git Done`);
+  (_req, res) => {
+    res.redirect(process.env.FRONT_URL as string);
   },
 );
 

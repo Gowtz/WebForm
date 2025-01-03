@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Calendar, Home, Mail, Search, Settings } from "lucide-react";
 
 import {
   Sidebar,
@@ -11,18 +11,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "#",
+    title: "Main",
+    url: "/dashboard/main",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
+    title: "Mail",
+    url: "/dashboard/mail",
+    icon: Mail,
   },
   {
     title: "Calendar",
@@ -42,6 +44,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const location = useLocation();
   return (
     <Sidebar>
       <SidebarContent>
@@ -55,7 +58,14 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a href={item.url}>
+                    <a
+                      href={item.url}
+                      className={cn(
+                        location.pathname === item.url
+                          ? `bg-stone-200 text-primary `
+                          : "",
+                      )}
+                    >
                       <item.icon />
                       <span>{item.title}</span>
                     </a>
