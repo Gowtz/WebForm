@@ -5,23 +5,37 @@ import "./index.css";
 import App from "./App.tsx";
 import Auth from "./components/pages/auth/Auth.tsx";
 import Dash from "./components/pages/dashboard/Dash.tsx";
+import { ThemeProvider } from "@/components/theme-provider";
 import Main from "./components/pages/dashboard/Main.tsx";
+import { ProtectedRoute } from "./hooks/Protected.tsx";
+import Mail from "./components/pages/dashboard/Mail.tsx";
+import EmailServices from "./components/pages/dashboard/EmailServices.tsx";
+import Statistics from "./components/pages/dashboard/Statistics.tsx";
+import Form from "./components/pages/dashboard/Form/Form.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/auth" element={<Auth />} />
-        <Route path="/dashboard" element={<Dash />}>
-          <Route path="" element={<Navigate to="main" replace />} />{" "}
-          <Route path="/dashboard/main" element={<Main />} />
-          <Route path="/dashboard/mail" element={<Main />} />
-          <Route path="/dashboard/email-services" element={<Main />} />
-          <Route path="/dashboard/statics" element={<Main />} />
-          <Route path="/dashboard/settings" element={<Main />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/auth" element={<Auth />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<Dash />}>
+              <Route path="" element={<Navigate to="main" replace />} />{" "}
+              <Route path="/dashboard/main" element={<Main />} />
+              <Route path="/dashboard/forms" element={<Form />} />
+              <Route path="/dashboard/mail" element={<Mail />} />
+              <Route
+                path="/dashboard/email-services"
+                element={<EmailServices />}
+              />
+              <Route path="/dashboard/statics" element={<Statistics />} />
+              <Route path="/dashboard/settings" element={<Main />} />
+            </Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
   </StrictMode>,
 );

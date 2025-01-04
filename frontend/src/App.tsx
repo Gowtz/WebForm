@@ -32,7 +32,7 @@ export default function App() {
   }, [fetchUser]);
   return (
     <>
-      <header className="absolute top-0 left-0 h-24 w-full border bg-white z-50">
+      <header className="absolute top-0 left-0 h-24 w-full border bg-background z-50">
         <nav className="px-7 md:px-20 flex items-center justify-between w-full h-full ">
           <div className="logo text-2xl font-semibold lg:text-2xl w-full">
             <a href="/">Web Forms</a>
@@ -68,7 +68,7 @@ export default function App() {
                 exit={{ opacity: 0, y: -50 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
                 className={cn(
-                  "absolute md:hidden top-24 w-full -mx-7 py-10 gap-7 px-10  flex flex-col  items-start  bg-slate-100 z-10",
+                  "absolute md:hidden top-24 w-full -mx-7 py-10 gap-7 px-10  flex flex-col  items-start  bg-background z-10",
                 )}
               >
                 <li>

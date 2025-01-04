@@ -1,4 +1,11 @@
-import { BookCopy, ChartLine, Mail, Server, Settings } from "lucide-react";
+import {
+  BookCopy,
+  ChartLine,
+  Mail,
+  NotepadText,
+  Server,
+  Settings,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -14,7 +21,6 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
-import { useStore } from "@/hooks/store";
 
 // Menu items.
 const items = [
@@ -22,6 +28,11 @@ const items = [
     title: "Projects",
     url: "/dashboard/main",
     icon: BookCopy,
+  },
+  {
+    title: "Forms",
+    url: "/dashboard/forms",
+    icon: NotepadText,
   },
   {
     title: "Mail",
@@ -38,16 +49,10 @@ const items = [
     url: "/dashboard/statics",
     icon: ChartLine,
   },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
 ];
 
 export function AppSidebar() {
   const location = useLocation();
-  const { user } = useStore((state) => state.user);
 
   return (
     <Sidebar>
@@ -66,7 +71,7 @@ export function AppSidebar() {
                       href={item.url}
                       className={cn(
                         location.pathname === item.url
-                          ? `bg-stone-200 text-primary `
+                          ? `bg-stone-200 text-stone-800`
                           : "",
                       )}
                     >
@@ -79,16 +84,17 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarFooter>
-          <div className="flex gap-2 justify-start items-center mt-auto mb-5 ml-5">
-            <img
-              src={user?.avatar}
-              alt="Profile"
-              width="30"
-              className="rounded-full"
-            />
-            <span>{user?.name}</span>
-          </div>
+        <SidebarFooter className="mb-3">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <a href={"/dashboard"}>
+                  <Settings />
+                  <span>Settings</span>
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </SidebarFooter>
       </SidebarContent>
     </Sidebar>
