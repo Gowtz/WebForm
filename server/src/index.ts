@@ -29,6 +29,11 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/auth", userRoute);
+app.use((err, req, res, next) => {
+  if (err) {
+    console.log(Error);
+  }
+});
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() =>

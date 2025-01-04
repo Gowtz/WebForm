@@ -20,7 +20,6 @@ router.get(
   "/callback/google",
   passport.authenticate("google", { failureRedirect: "/not-authenticated" }),
   (req, res) => {
-    console.log(req.user);
     res.redirect(process.env.FRONT_URL as string);
   },
 );
