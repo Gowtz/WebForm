@@ -1,4 +1,4 @@
-import express from "express";
+import express, { ErrorRequestHandler } from "express";
 import session from "express-session";
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -29,11 +29,15 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/auth", userRoute);
-app.use((err, req, res, next) => {
-  if (err) {
-    console.log(Error);
-  }
-});
+const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
+  console.log(err);
+  res.status(500).json({
+    error: err,
+  });
+};
+
+app.use(errorhandler);
+
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() =>
