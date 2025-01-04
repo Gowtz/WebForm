@@ -1,12 +1,11 @@
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "./lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./components/ui/button";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import { fetchUser } from "@/action/fetchUser";
-import { RootState } from "@/redux/store";
+import { Link } from "react-router-dom";
+import { useStore } from "./hooks/store";
+import { useFetchUser } from "./action/userAuth";
 
 // Animation variants
 const heading1Variants = {
@@ -24,14 +23,13 @@ const image = {
   visible: { opacity: 1, y: 0, transition: { duration: 1.2 } },
 };
 export default function App() {
-  const dispatch = useDispatch();
-  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
-
-  useEffect(() => {
-    //@ts-ignore
-    dispatch(fetchUser()); // Fetch user details on app load
-  }, [dispatch]);
   const [toggleMobile, setToggleMobile] = useState<boolean>(false);
+
+  const { isAuthenticated } = useStore((state) => state.user);
+  const { fetchUser } = useFetchUser();
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
   return (
     <>
       <header className="absolute top-0 left-0 h-24 w-full border bg-white z-50">
@@ -57,7 +55,7 @@ export default function App() {
             {isAuthenticated && (
               <>
                 <li>
-                  <a href="/dashboard">Dashboard</a>
+                  <Link to={"/dashboard/main"}>Dashboard</Link>
                 </li>
               </>
             )}

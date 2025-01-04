@@ -1,8 +1,9 @@
-import { Calendar, Home, Mail, Search, Settings } from "lucide-react";
+import { BookCopy, ChartLine, Mail, Server, Settings } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -13,13 +14,14 @@ import {
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { useLocation } from "react-router-dom";
+import { useStore } from "@/hooks/store";
 
 // Menu items.
 const items = [
   {
-    title: "Main",
+    title: "Projects",
     url: "/dashboard/main",
-    icon: Home,
+    icon: BookCopy,
   },
   {
     title: "Mail",
@@ -27,14 +29,14 @@ const items = [
     icon: Mail,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Email Services",
+    url: "/dashboard/email-services",
+    icon: Server,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
+    title: "Statics",
+    url: "/dashboard/statics",
+    icon: ChartLine,
   },
   {
     title: "Settings",
@@ -45,13 +47,15 @@ const items = [
 
 export function AppSidebar() {
   const location = useLocation();
+  const { user } = useStore((state) => state.user);
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarHeader>
           <h1 className="text-2xl font-semibold text-center mt-5">Web Form</h1>
         </SidebarHeader>
-        <SidebarGroup>
+        <SidebarGroup className="h-full">
           <SidebarGroupLabel>Application</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -75,6 +79,17 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarFooter>
+          <div className="flex gap-2 justify-start items-center mt-auto mb-5 ml-5">
+            <img
+              src={user?.avatar}
+              alt="Profile"
+              width="30"
+              className="rounded-full"
+            />
+            <span>{user?.name}</span>
+          </div>
+        </SidebarFooter>
       </SidebarContent>
     </Sidebar>
   );
