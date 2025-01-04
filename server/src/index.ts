@@ -10,11 +10,11 @@ export const URL = process.env.URL || `http://localhost:${PORT}`;
 import "./lib/Auth";
 import mongoose from "mongoose";
 const app = express();
-
+const FRONT_URL = process.env.FRONT_URL;
 //middlewares
 app.use(
   cors({
-    origin: process.env.FRONT_URL,
+    origin: FRONT_URL,
     credentials: true,
   }),
 );
