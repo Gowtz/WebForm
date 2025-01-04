@@ -34,7 +34,7 @@ export default function DynamicForm() {
   return (
     <>
       {fields.map((field) => (
-        <div key={field.id} className="flex flex-col space-y-2 my-5">
+        <div key={field.id} className="flex flex-col space-y-2 my-5 px-2">
           <label htmlFor={`field-${field.id}`}>{field.label}</label>
           <div className="flex gap-5">
             <Input

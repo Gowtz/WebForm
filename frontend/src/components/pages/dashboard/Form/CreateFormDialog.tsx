@@ -16,7 +16,7 @@ export const CreateFormDialog = ({ children }: { children: ReactNode }) => {
   return (
     <Dialog>
       <DialogTrigger>{children}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="  overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="mb-10">Create a Form</DialogTitle>
           <div>
@@ -32,8 +32,9 @@ export const CreateFormDialog = ({ children }: { children: ReactNode }) => {
                   <div className="mt-5">
                     <SelectProject />
                   </div>
-
-                  <DynamicForm />
+                  <div className="ele max-h-[500px] overflow-y-auto my-5">
+                    <DynamicForm />
+                  </div>
                 </div>
                 <Button>Create</Button>
               </div>
