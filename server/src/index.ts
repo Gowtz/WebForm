@@ -12,7 +12,12 @@ import mongoose from "mongoose";
 const app = express();
 
 //middlewares
-app.use(cors());
+app.use(
+  cors({
+    origin: process.env.FRONT_URL,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
