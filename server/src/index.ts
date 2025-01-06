@@ -5,24 +5,47 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import passport from "passport";
 import userRoute from "./routes/user";
+import mongoose from "mongoose";
+import { createClient } from "redis";
+import { RedisStore } from "connect-redis";
+const FRONT_URL = process.env.FRONT_URL as string;
 const PORT = process.env.PORT || 8000;
 export const URL = process.env.URL || `http://localhost:${PORT}`;
 import "./lib/Auth";
-import mongoose from "mongoose";
+
+//Redis Connect
+export const client = createClient({
+  url: process.env.REDIS || "redis://localhost:6379",
+});
+client
+  .connect()
+  .then(() => {
+    console.log("Connected to Redis");
+  })
+  .catch((err) => {
+    console.error("Error connecting to Redis:", err);
+  });
+
+client.on("error", (err) => {
+  console.error(`Redis error: ${err}`);
+});
+
 const app = express();
-const FRONT_URL = process.env.FRONT_URL;
 //middlewares
 app.use(
   cors({
-    origin: FRONT_URL,
+    origin: [FRONT_URL, URL, "http://localhost"],
     credentials: true,
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SESSION_SECRET as string,
+    store: new RedisStore({ client }),
     saveUninitialized: false,
     resave: false,
     cookie: {
@@ -30,7 +53,6 @@ app.use(
     },
   }),
 );
-app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use("/api/auth", userRoute);

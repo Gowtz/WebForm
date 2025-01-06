@@ -1,6 +1,5 @@
 import { Router } from "express";
 import passport from "passport";
-
 const router = Router();
 
 // Route : /api/auth/google
@@ -19,7 +18,7 @@ router.get(
 router.get(
   "/callback/google",
   passport.authenticate("google", { failureRedirect: "/not-authenticated" }),
-  (req, res) => {
+  (_req, res) => {
     res.redirect(process.env.FRONT_URL as string);
   },
 );
@@ -42,6 +41,8 @@ router.get(
 
 // Route to check session data
 router.get("/getsession", (req, res) => {
+  console.log(req.cookies);
+  console.log(req.session);
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {

@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/passport": "^1.0.17",
+    "connect-redis": "^8.0.1",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -22,7 +23,8 @@
     "passport": "^0.7.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "redis": "^4.7.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.8",
@@ -32,6 +34,7 @@
     "@types/node": "^22.10.3",
     "@types/passport-github2": "^1.2.9",
     "@types/passport-google-oauth20": "^2.0.16",
-    "@types/passport-local": "^1.0.38"
+    "@types/passport-local": "^1.0.38",
+    "typescript-eslint": "^8.19.0"
   }
 }
