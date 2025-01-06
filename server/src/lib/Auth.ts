@@ -4,9 +4,9 @@ import {
   Strategy as GitHubStrategy,
   Profile as GitProfile,
 } from "passport-github2";
-
 import User from "../model/user";
 import { URL } from "..";
+
 // Serialze User
 passport.serializeUser((user: any, cb: Function) => {
   if (user.googleId) {

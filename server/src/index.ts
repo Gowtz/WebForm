@@ -30,7 +30,9 @@ client.on("error", (err) => {
   console.error(`Redis error: ${err}`);
 });
 
+// Initialize express
 const app = express();
+
 //middlewares
 app.use(
   cors({
@@ -39,9 +41,12 @@ app.use(
   }),
 );
 
+//Parsing for req body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+//Express Session init
 app.use(
   session({
     secret: process.env.SESSION_SECRET as string,
@@ -53,9 +58,13 @@ app.use(
     },
   }),
 );
+//Passport JS Init
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Routes
 app.use("/api/auth", userRoute);
+
 const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
   console.log(err);
   res.status(500).json({
@@ -65,6 +74,7 @@ const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
 app.use(errorhandler);
 
+// Run Server
 mongoose
   .connect(process.env.MONGO_URI as string)
   .then(() =>
