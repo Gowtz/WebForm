@@ -5,6 +5,8 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import passport from "passport";
 import userRoute from "./routes/user";
+import projectRoute from "./routes/project";
+import formRoute from "./routes/form";
 import mongoose from "mongoose";
 import { createClient } from "redis";
 import { RedisStore } from "connect-redis";
@@ -47,6 +49,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //Express Session init
+app.set('trust proxy', 1)
 app.use(
   session({
     secret: process.env.SESSION_SECRET as string,
@@ -55,6 +58,7 @@ app.use(
     resave: false,
     cookie: {
       maxAge: 60000 * 24,
+      secure:true
     },
   }),
 );
@@ -64,6 +68,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/auth", userRoute);
+app.use("/api/project", projectRoute);
+app.use("/api/form", formRoute);
 
 const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
   console.log(err);
