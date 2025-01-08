@@ -5,7 +5,6 @@ export interface FormType extends Document {
   formName: string;
   projectId: mongoose.Types.ObjectId;
   formDataSchema: string;
-  timestamps: boolean;
 }
 
 // Model Document Type
@@ -18,19 +17,23 @@ export interface FormModelType extends Model<FormType> {
     formName: string;
     projectId: string;
     formDataSchema: string;
-  }): Promise<void>;
+  }): Promise<FormType | null>;
 }
 
 // Creating Schema
-const formSchema = new mongoose.Schema<FormType>({
-  formName: { type: String, required: true },
-  projectId: {
-    types: Schema.Types.ObjectId,
-    ref: "Project",
+const formSchema = new mongoose.Schema<FormType>(
+  {
+    formName: { type: String, required: true },
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: "Project",
+    },
+    formDataSchema: { type: String, required: true },
   },
-  formDataSchema: { types: String, required: true },
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  },
+);
 
 // Custom methods that Create Form
 formSchema.statics.createForm = async function ({
@@ -42,7 +45,20 @@ formSchema.statics.createForm = async function ({
   projectId: string;
   formDataSchema: string;
 }) {
-  this.create({ formName, formDataSchema, projectId });
+  if (!projectId || !mongoose.Types.ObjectId.isValid(projectId)) {
+    throw new Error("Invalid projectID");
+  }
+  try {
+    return await this.create({
+      formName,
+      formDataSchema,
+      projectId: new mongoose.Types.ObjectId(projectId),
+    });
+  } catch (error) {
+    //TODO : rewrite catch later
+    console.log(error);
+    return null;
+  }
 };
 
 // Create the Form model
