@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { cn } from "./lib/utils";
 import { motion, AnimatePresence } from "motion/react";
 import { Button } from "./components/ui/button";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { useStore } from "./hooks/store";
 import { useFetchUser } from "./action/userAuth";
 
@@ -35,20 +35,20 @@ export default function App() {
       <header className="absolute top-0 left-0 h-24 w-full border bg-background z-50">
         <nav className="px-7 md:px-20 flex items-center justify-between w-full h-full ">
           <div className="logo text-2xl font-semibold lg:text-2xl w-full">
-            <a href="/">Web Forms</a>
+            <Link to="/">Web Forms</Link>
           </div>
 
           <ul className="hidden navlink md:flex items-center gap-7">
             <li>
-              <a href="#">Docs</a>
+              <Link to="#">Docs</Link>
             </li>
             {!isAuthenticated && (
               <>
                 <li>
-                  <a href="/auth?type=signin">Login</a>
+                  <Link to="/auth?type=signin">Login</Link>
                 </li>
                 <li>
-                  <a href="/auth?type=signup">Signup</a>
+                  <Link to="/auth?type=signup">Signup</Link>
                 </li>
               </>
             )}
@@ -72,7 +72,7 @@ export default function App() {
                 )}
               >
                 <li>
-                  <a href="#">Docs</a>
+                  <Link to="#">Docs</Link>
                 </li>
                 {!isAuthenticated && (
                   <>

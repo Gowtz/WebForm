@@ -12,7 +12,7 @@ import { createClient } from "redis";
 import { RedisStore } from "connect-redis";
 const FRONT_URL = process.env.FRONT_URL as string;
 const PORT = process.env.PORT || 8000;
-export const URL = process.env.URL || `http://localhost:${PORT}`;
+export const URL = process.env.URL as string
 import "./lib/Auth";
 
 //Redis Connect
@@ -38,11 +38,12 @@ const app = express();
 //middlewares
 app.use(
   cors({
-    origin: [FRONT_URL, URL, "http://localhost"],
+    origin: FRONT_URL,
     credentials: true,
   }),
 );
 
+      console.log(`${URL}/api/auth/callback/google`)
 //Parsing for req body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

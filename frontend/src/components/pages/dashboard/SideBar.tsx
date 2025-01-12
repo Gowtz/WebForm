@@ -20,7 +20,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // Menu items.
 const items = [
@@ -67,8 +67,8 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <a
-                      href={item.url}
+                    <Link
+                      to={item.url}
                       className={cn(
                         location.pathname === item.url
                           ? `bg-stone-200 text-stone-800`
@@ -77,7 +77,7 @@ export function AppSidebar() {
                     >
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -88,10 +88,10 @@ export function AppSidebar() {
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a href={"/dashboard"}>
+                <Link to={"/dashboard"}>
                   <Settings />
                   <span>Settings</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>

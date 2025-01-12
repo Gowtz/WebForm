@@ -41,8 +41,6 @@ router.get(
 
 // Route to check session data
 router.get("/getsession", (req, res) => {
-  console.log(req.cookies);
-  console.log(req.session);
   if (req.isAuthenticated()) {
     res.json({ user: req.user });
   } else {
