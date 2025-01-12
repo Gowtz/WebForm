@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "6.2.1",
     "@types/passport": "^1.0.17",
     "connect-redis": "^8.0.1",
     "cookie-parser": "^1.4.7",
@@ -36,6 +37,7 @@
     "@types/passport-github2": "^1.2.9",
     "@types/passport-google-oauth20": "^2.0.16",
     "@types/passport-local": "^1.0.38",
+    "prisma": "^6.2.1",
     "typescript-eslint": "^8.19.0"
   }
 }

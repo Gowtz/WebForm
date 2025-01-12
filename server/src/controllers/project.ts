@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { projectSchema } from "../lib/zod";
-import Project from "../model/projects";
+// import Project from "../model/projects";
 
 export const createProject = async (req: Request, res: Response) => {
   const { projectName, description, webURL } = req.body;
@@ -10,12 +10,12 @@ export const createProject = async (req: Request, res: Response) => {
       description,
       webURL,
     });
-    const project = await Project.createProject(validProjectResponse);
-    if (project) {
-      res.send("Success");
-    } else {
-      res.send("error while create project");
-    }
+    // const project = await Project.createProject(validProjectResponse);
+    // if (project) {
+    //   res.send("Success");
+    // } else {
+    //   res.send("error while create project");
+    // }
   } catch (error) {
     res.send(error);
   }

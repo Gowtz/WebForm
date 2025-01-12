@@ -5,16 +5,16 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import passport from "passport";
 import userRoute from "./routes/user";
-import projectRoute from "./routes/project";
-import formRoute from "./routes/form";
-import mongoose from "mongoose";
+// import projectRoute from "./routes/project";
+// import formRoute from "./routes/form";
 import { createClient } from "redis";
 import { RedisStore } from "connect-redis";
 const FRONT_URL = process.env.FRONT_URL as string;
 const PORT = process.env.PORT || 8000;
 export const URL = process.env.URL as string
 import "./lib/Auth";
-
+import { PrismaClient } from '@prisma/client';
+export const prisma = new PrismaClient()
 //Redis Connect
 export const client = createClient({
   url: process.env.REDIS || "redis://localhost:6379",
@@ -71,8 +71,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/auth", userRoute);
-app.use("/api/project", projectRoute);
-app.use("/api/form", formRoute);
+// app.use("/api/project", projectRoute);
+// app.use("/api/form", formRoute);
 
 const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
   console.log(err);
@@ -83,10 +83,4 @@ const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
 app.use(errorhandler);
 
-// Run Server
-mongoose
-  .connect(process.env.MONGO_URI as string)
-  .then(() =>
-    app.listen(PORT, () => console.log(`The server is running in ${URL} `)),
-  )
-  .catch(() => console.log(`There is error in connecting to mongodb`));
+app.listen(PORT, () => console.log(`The server is running in ${URL} `))

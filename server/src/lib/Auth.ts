@@ -4,18 +4,12 @@ import {
   Strategy as GitHubStrategy,
   Profile as GitProfile,
 } from "passport-github2";
-import User from "../model/user";
 import { URL } from "..";
+import { findOrCreateUserWithOauth, findUserByproviderId} from "./prisma";
 
 // Serialze User
-passport.serializeUser((user: any, cb: Function) => {
-  if (user.googleId) {
-    cb(null, { provider: "google", providerId: user.googleId });
-  } else if (user.githubId) {
-    cb(null, { provider: "github", providerId: user.githubId });
-  } else {
-    cb(new Error("Unknown provider"), null);
-  }
+passport.serializeUser(({id,provider}: any, cb: Function) => {
+  cb(null,id={provider,providerId:id})
 });
 
 // Deserialize User
@@ -26,7 +20,7 @@ passport.deserializeUser(
   ) => {
     try {
       const { provider, providerId } = id;
-      const user = await User.findOne({ [`${provider}Id`]: providerId });
+      const user = await findUserByproviderId(provider,providerId)
       if (!user) {
         return cb(new Error("User not found"), null);
       }
@@ -45,21 +39,16 @@ passport.use(
       callbackURL: `${URL}/api/auth/callback/google`,
     },
     async (
-      _accessToken: string,
-      _refreshToken: string,
+      accessToken: string,
+      refreshToken: string,
       profile: Profile,
       cb: Function,
     ) => {
       try {
         // Assuming User.findOrCreate is a method that accepts a googleId and returns a user or creates one
-        const user = await User.findOrCreate({
-          provider: "google",
-          providerId: profile.id,
-          email: profile.emails?.[0].value as string,
-          name: profile.name?.givenName as string,
-          avatar: profile.photos?.[0].value,
-        });
-        return cb(null, user);
+
+        const user = await findOrCreateUserWithOauth('google',profile.id,accessToken,refreshToken,profile.name?.givenName as string, profile.photos?.[0].value as string,profile.emails?.[0].value )
+        return cb(null, {id:profile.id,provider:'google'});
       } catch (err) {
         return cb(err, null);
       }
@@ -77,21 +66,14 @@ passport.use(
       callbackURL: `${URL}/api/auth/callback/github`,
     },
     async (
-      _accessToken: string,
-      _refreshToken: string,
+      accessToken: string,
+      refreshToken: string,
       profile: GitProfile,
       cb: Function,
     ) => {
       try {
-        // Assuming User.findOrCreate is a method that accepts a githubId and returns a user or creates one
-        const user = await User.findOrCreate({
-          provider: "github",
-          providerId: profile.id,
-          email: profile.emails?.[0].value as string,
-          name: profile.displayName as string,
-          avatar: profile.photos?.[0].value,
-        });
-        return cb(null, user);
+        const user = await findOrCreateUserWithOauth('github',profile.id,accessToken,refreshToken,profile.displayName as string,profile.photos?.[0].value as string,profile.emails?.[0].value)
+        return cb(null, {id:profile.id,provider:'github'});
       } catch (err) {
         return cb(err, null);
       }
