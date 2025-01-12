@@ -55,11 +55,12 @@ app.use(
     secret: process.env.SESSION_SECRET as string,
     store: new RedisStore({ client }),
     saveUninitialized: false,
+    proxy:true,
     resave: false,
     cookie: {
       maxAge: 60000 * 24,
-      secure:true,
-      sameSite: 'none'
+      secure:process.env.NODE_ENV === 'production',
+      sameSite: 'lax'
     },
   }),
 );
