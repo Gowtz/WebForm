@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { projectSchema } from "../lib/zod";
 import { prisma } from "..";
-// import Project from "../model/projects";
 
 export const createProject = async (req: Request, res: Response) => {
   const { projectName, description, webURL } = req.body;
@@ -23,7 +22,7 @@ export const createProject = async (req: Request, res: Response) => {
   }
 };
 
-export const getAllProject = async(_req:Response,res:Response)=>{
+export const getAllProject = async(_req:Request,res:Response)=>{
   try {
    const project = await prisma.project.findMany() 
     res.send(project)
