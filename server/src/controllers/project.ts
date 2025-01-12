@@ -22,3 +22,12 @@ export const createProject = async (req: Request, res: Response) => {
     res.send(error);
   }
 };
+
+export const getAllProject = async(_req:Response,res:Response)=>{
+  try {
+   const project = await prisma.project.findMany() 
+    res.send(project)
+  } catch (error) {
+    res.send(error)
+  }
+}
