@@ -8,28 +8,29 @@ export async function findOrCreateUserWithOauth(
   avatar: string,
   email?: string
 ) {
-  // Try to find the OAuth provider by provider and providerId
+
   let oauthProvider = await prisma.oauthProvider.findFirst({
     where: {
-      provider: provider,  // Search by provider
-      providerId: providerId, // and providerId
+      provider: provider, 
+      providerId: providerId, 
     },
     include: {
-      user: true, // Include the related User model
+      user: true, 
     },
   });
 
 
   if (!oauthProvider) {
+
     // If OAuth provider entry does not exist, create a new user with OAuth details
     const user = await prisma.user.create({
       data: {
-        email: email ?? undefined,  // Email is optional, use undefined if email is not provided
+        email: email ?? undefined,  
         avatar: avatar,
         name,
         oauthProviders: {
           create: {
-            provider:provider,
+            provider: provider,
             providerId: providerId,
             accessToken: accessToken,
             refreshToken: refreshToken,
@@ -40,9 +41,7 @@ export async function findOrCreateUserWithOauth(
     console.log('New user created with OAuth:', user);
     return user;
   } else {
-    //@ts-ignore
     console.log('User found with OAuth provider:', oauthProvider.user);
-    //@ts-ignore
     return oauthProvider.user;
   }
 }
@@ -50,14 +49,27 @@ export async function findOrCreateUserWithOauth(
 export async function findUserByproviderId(provider: string, providerId: string) {
   let oauthProvider = await prisma.oauthProvider.findFirst({
     where: {
-      provider: provider,  // Search by provider
-      providerId: providerId, // and providerId
+      provider: provider,  
+      providerId: providerId, 
     },
     include: {
-      user: true, // Include the related User model
+      user: true, 
     },
   });
   //@ts-ignore
   if (oauthProvider) return oauthProvider.user
   else return null
+}
+export async function findProjectThenCreateProject({name,projectId,formSchema}:{name:string,projectId:string,formSchema:string}) {
+  let project = await prisma.project.findFirst({
+    where:{
+      id:projectId
+    }
+
+  })
+  if(project){
+    const form = await prisma.form.create({data:{name,projectId,formSchema}})
+    if(form) return form
+    return null
+  }
 }

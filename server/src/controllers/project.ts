@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { projectSchema } from "../lib/zod";
+import { prisma } from "..";
 // import Project from "../model/projects";
 
 export const createProject = async (req: Request, res: Response) => {
@@ -10,13 +11,14 @@ export const createProject = async (req: Request, res: Response) => {
       description,
       webURL,
     });
-    // const project = await Project.createProject(validProjectResponse);
-    // if (project) {
-    //   res.send("Success");
-    // } else {
-    //   res.send("error while create project");
-    // }
+    const project = await prisma.project.create({data:{name:validProjectResponse.projectName,webURL:validProjectResponse.webURL, description:validProjectResponse.description}})
+    if (project) {
+      res.send("Success");
+    } else {
+      res.send("error while create project");
+    }
   } catch (error) {
+    console.log(error)
     res.send(error);
   }
 };

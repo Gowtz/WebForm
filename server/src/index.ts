@@ -5,8 +5,8 @@ import cookieParser from "cookie-parser";
 import "dotenv/config";
 import passport from "passport";
 import userRoute from "./routes/user";
-// import projectRoute from "./routes/project";
-// import formRoute from "./routes/form";
+import projectRoute from "./routes/project";
+import formRoute from "./routes/form";
 import { createClient } from "redis";
 import { RedisStore } from "connect-redis";
 const FRONT_URL = process.env.FRONT_URL as string;
@@ -71,8 +71,8 @@ app.use(passport.session());
 
 // Routes
 app.use("/api/auth", userRoute);
-// app.use("/api/project", projectRoute);
-// app.use("/api/form", formRoute);
+app.use("/api/project", projectRoute);
+app.use("/api/form", formRoute);
 
 const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
   console.log(err);
