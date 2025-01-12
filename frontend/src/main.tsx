@@ -12,6 +12,13 @@ import Mail from "./components/pages/dashboard/Mail.tsx";
 import EmailServices from "./components/pages/dashboard/EmailServices.tsx";
 import Statistics from "./components/pages/dashboard/Statistics.tsx";
 import Form from "./components/pages/dashboard/Form/Form.tsx";
+import axios from "axios";
+import { CONFIG } from "./lib/config.ts";
+
+export const fetcher = axios.create({
+  baseURL:CONFIG.BACKEND_URL,
+  withCredentials:true
+})
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

@@ -1,7 +1,6 @@
-import axios from "axios";
-import { CONFIG } from "../lib/config";
 import { useStore } from "@/hooks/store";
 import { useCallback, useState } from "react";
+import { fetcher } from "@/main";
 
 export const useFetchUser = () => {
   const { loginSucess, logoutUser } = useStore();
@@ -9,11 +8,9 @@ export const useFetchUser = () => {
   const fetchUser = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${CONFIG.BACKEND_URL}/api/auth/getsession`,
-        {
-          withCredentials: true, // Ensure cookies are sent with the request
-        },
+      const response = await fetcher.get(
+        `/api/auth/getsession`
+
       );
       if (response.data && response.data.user) {
         loginSucess(response.data.user);

@@ -1,35 +1,19 @@
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
 import { SelectInputType } from "./SelectType";
+import { Field } from "./CreateFormDialog";
 
-type Field = {
-  id: number;
-  label: string;
-  value: string;
-};
 
-export default function DynamicForm() {
-  const [fields, setFields] = useState<Field[]>([
-    { id: 1, label: "Field 1", value: "" },
-  ]);
 
-  const handleAddField = () => {
-    const newField: Field = {
-      id: fields.length + 1,
-      label: `Field ${fields.length + 1}`,
-      value: "",
-    };
-    setFields((prevFields) => [...prevFields, newField]);
-  };
+export default function DynamicForm({fields, setFields}:{fields:Field[],setFields:React.Dispatch<React.SetStateAction<Field[]>> }) {
 
   const handleInputChange = (id: number, value: string) => {
     setFields((prevFields) =>
-      prevFields.map((field) =>
+      prevFields.map((field:Field) =>
         field.id === id ? { ...field, value } : field,
       ),
+
     );
-  };
+  }
 
   return (
     <>
@@ -49,9 +33,6 @@ export default function DynamicForm() {
           </div>
         </div>
       ))}
-      <Button type="button" onClick={handleAddField}>
-        Add Field
-      </Button>
     </>
   );
 }

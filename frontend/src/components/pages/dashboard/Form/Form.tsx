@@ -51,7 +51,7 @@ export default function Form() {
               <AccordionItem value="item-1">
                 <div className="flex justify-between px-10 py-5 items-center">
                   <AccordionTrigger>
-                    <h3>{form}</h3>
+                    <h3 className="mx-5 font-bold">{form}</h3>
                   </AccordionTrigger>
                   <div className="flex items-center gap-5">
                     <Badge>Projects</Badge>
@@ -69,7 +69,7 @@ export default function Form() {
                     </div>
                   </div>
                 </div>
-                <AccordionContent className="ml-10 my-5 flex gap-10 items-center">
+                <AccordionContent className="ml-10 my-3 mx-16 flex gap-10 items-center">
                   <h2 className="font-semibold">FormAction Link</h2>
                   <span
                     className="py-2 px-5 rounded-lg bg-secondary flex gap-3 cursor-pointer items-center "
