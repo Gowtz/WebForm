@@ -7,12 +7,8 @@ export default function Main() {
   return (
     <div className="p-5 w-full overflow-y-auto h-full ">
       <Navbar h1="Project" h3="Create a project to send the form" />
-     <CreateProject />
-{/* End Of dialog*/}
-
+      <CreateProject />
       <Projects />
-
-
     </div>
   );
 }

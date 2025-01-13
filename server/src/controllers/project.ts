@@ -30,3 +30,32 @@ export const getAllProject = async(_req:Request,res:Response)=>{
     res.send(error)
   }
 }
+
+export const deleteProject= async(req:Request,res:Response) => {
+  const {id}= req.params
+  try {
+    await prisma.project.delete({where:{
+      id
+    }})
+    res.send('Deleted')
+  } catch (error) {
+    res.send(error)
+    
+  }
+}
+export const toggleProjectActive = async (req:Request,res:Response)=>{
+  const {id,isActive } = req.body
+  try {
+   const project =  await prisma.project.update({where:{
+      id
+    },
+      data:{
+        isActive
+      }
+    })
+    res.send("done")
+  } catch (err) {
+    
+  }
+
+}

@@ -11,11 +11,16 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useStore } from "@/hooks/store";
+import { useFetchForm } from "@/action/useForm";
 
-const forms = ["FormOne", "FormTwo", "FormThree"];
 export default function Form() {
+  const [filter, setFilter] = useState("")
+  const { forms } = useStore()
+  const { fetchForm, toggleActiveForm,deleteForm } = useFetchForm()
+  const [checked, setChecked] = useState(forms?.map(form => ({ id: form.id, active: form.isActive })))
   const { toast } = useToast();
   const handleCopy = (e: React.MouseEvent<HTMLSpanElement>) => {
     navigator.clipboard
@@ -29,38 +34,46 @@ export default function Form() {
         console.error("Failed to copy:", error);
       });
   };
+  function handleChange(formId: string, isActive: boolean) {
+    console.log(isActive)
+    toggleActiveForm(formId, isActive)
+  }
 
+  useEffect(() => { fetchForm() }, [fetchForm])
   return (
     <div className="w-full hifull min-h-screen p-5">
       <Navbar h1="Forms" h3="Create forms" />
-      <div className="buttons flex gap-5 items-center">
-        <SelectProject />
+      <div className="buttons flex gap-5 items-center justify-between md:mr-16 ">
         <CreateFormDialog>
           <Button className="flex gap-2 items-center ">
             <Plus />
-            <span>New Project</span>
+            <span>New Form</span>
           </Button>
         </CreateFormDialog>
+        <div>
+          <span className="font-semibold px-2">Filter by project</span>
+          <SelectProject handleState={setFilter} />
+        </div>
       </div>
 
       <h1 className="mt-10 mb-5">List of forms</h1>
       <ul className="border rounded-lg divide-y">
-        {forms.map((form, index) => (
-          <li key={index}>
+        {forms?.map((form, index) => (
+          <li key={form.id}>
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
                 <div className="flex justify-between px-10 py-5 items-center">
                   <AccordionTrigger>
-                    <h3 className="mx-5 font-bold">{form}</h3>
+                    <h3 className="mx-5 font-bold">{form.name}</h3>
                   </AccordionTrigger>
                   <div className="flex items-center gap-5">
-                    <Badge>Projects</Badge>
-                    <Switch />{" "}
+                    <Badge>{form.projectId}</Badge>
+                    <Switch checked={form.isActive} onCheckedChange={() => handleChange(form.id, form.isActive)} />
                     <div className="buttonGroup flex gap-2 items-center">
                       <Button variant={"secondary"}>
                         <Pen />
                       </Button>
-                      <Button
+                      <Button onClick={()=>deleteForm(form.id)}
                         variant={"secondary"}
                         className="hover:bg-destructive hover:text-secondary dark:text-primary"
                       >

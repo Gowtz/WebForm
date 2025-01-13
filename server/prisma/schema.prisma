@@ -42,14 +42,17 @@ model Project {
 }
 
 model Form {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  name       String
-  isActive   Boolean  @default(true)
-  projectId  String   @db.ObjectId
-  project    Project  @relation(fields: [projectId], references: [id])
-  formSchema String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  name        String
+  isActive    Boolean  @default(true)
+  projectId   String   @db.ObjectId
+  projectName String
+  project     Project  @relation(fields: [projectId], references: [id])
+  formSchema  String
+  secret      String
+  apiURL      String
 }
 
 datasource db {

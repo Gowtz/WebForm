@@ -4,7 +4,7 @@ import {
   Strategy as GitHubStrategy,
   Profile as GitProfile,
 } from "passport-github2";
-import { URL } from "..";
+import { BASE_URL} from "..";
 import { findOrCreateUserWithOauth, findUserByproviderId} from "./prisma";
 
 // Serialze User
@@ -36,7 +36,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-      callbackURL: `${URL}/api/auth/callback/google`,
+      callbackURL: `${BASE_URL}/api/auth/callback/google`,
     },
     async (
       accessToken: string,
@@ -46,7 +46,6 @@ passport.use(
     ) => {
       try {
         // Assuming User.findOrCreate is a method that accepts a googleId and returns a user or creates one
-
         const user = await findOrCreateUserWithOauth('google',profile.id,accessToken,refreshToken,profile.name?.givenName as string, profile.photos?.[0].value as string,profile.emails?.[0].value )
         return cb(null, {id:profile.id,provider:'google'});
       } catch (err) {
@@ -63,7 +62,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-      callbackURL: `${URL}/api/auth/callback/github`,
+      callbackURL: `${BASE_URL}/api/auth/callback/github`,
     },
     async (
       accessToken: string,

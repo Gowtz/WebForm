@@ -1,4 +1,6 @@
 import { prisma } from "..";
+import { BASE_URL} from "..";
+import { generateRandomString } from "./utils";
 export async function findOrCreateUserWithOauth(
   provider: string,
   providerId: string,
@@ -11,11 +13,11 @@ export async function findOrCreateUserWithOauth(
 
   let oauthProvider = await prisma.oauthProvider.findFirst({
     where: {
-      provider: provider, 
-      providerId: providerId, 
+      provider: provider,
+      providerId: providerId,
     },
     include: {
-      user: true, 
+      user: true,
     },
   });
 
@@ -25,7 +27,7 @@ export async function findOrCreateUserWithOauth(
     // If OAuth provider entry does not exist, create a new user with OAuth details
     const user = await prisma.user.create({
       data: {
-        email: email ?? undefined,  
+        email: email ?? undefined,
         avatar: avatar,
         name,
         oauthProviders: {
@@ -49,27 +51,27 @@ export async function findOrCreateUserWithOauth(
 export async function findUserByproviderId(provider: string, providerId: string) {
   let oauthProvider = await prisma.oauthProvider.findFirst({
     where: {
-      provider: provider,  
-      providerId: providerId, 
+      provider: provider,
+      providerId: providerId,
     },
     include: {
-      user: true, 
+      user: true,
     },
   });
   //@ts-ignore
   if (oauthProvider) return oauthProvider.user
   else return null
 }
-export async function findProjectThenCreateProject({name,projectId,formSchema}:{name:string,projectId:string,formSchema:string}) {
+export async function findProjectThenCreateProject({ name, projectId, formSchema }: { name: string, projectId: string, formSchema: string }) {
   let project = await prisma.project.findFirst({
-    where:{
-      id:projectId
+    where: {
+      id: projectId
     }
-
   })
-  if(project){
-    const form = await prisma.form.create({data:{name,projectId,formSchema}})
-    if(form) return form
+  if (project) {
+    const secret = generateRandomString(8)
+    const form = await prisma.form.create({ data: { name, projectId, formSchema,projectName:project.name, secret, apiURL: `${BASE_URL}/sendform/${secret}` } })
+    if (form) return form
     return null
   }
 }

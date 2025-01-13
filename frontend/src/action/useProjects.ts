@@ -3,9 +3,10 @@ import { fetcher } from "@/main";
 import { useStore } from "@/hooks/store";
 
 export const useFetchProject = () => {
-  const { fetchAllProject } = useStore()
+  const { fetchAllProject, toggleProjectActive } = useStore()
+
   const [loading, setLoading] = useState<boolean>(false);
-  const  fetchProject= useCallback(async () => {
+  const fetchProject = useCallback(async () => {
     setLoading(true);
     try {
       const response = await fetcher.get(
@@ -19,6 +20,17 @@ export const useFetchProject = () => {
     } finally {
       setLoading(false);
     }
-  }, [ fetchAllProject]);
-  return { loading, fetchProject};
+  }, [fetchAllProject]);
+  const toggleActive = useCallback(async (id: string, isActive: boolean) => {
+    toggleProjectActive(id)
+
+    await fetcher.post('/api/project/toggleisactive', { id, isActive })
+
+  }, [toggleProjectActive])
+
+  const deleteProject= useCallback(async(id:string) => {
+     await fetcher.delete(`/api/project/delete/${id}`)
+    fetchProject()
+  },[fetchProject])
+  return { loading, fetchProject, toggleActive ,deleteProject};
 };

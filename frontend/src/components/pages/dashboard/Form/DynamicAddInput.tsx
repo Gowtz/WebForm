@@ -4,16 +4,7 @@ import { Field } from "./CreateFormDialog";
 
 
 
-export default function DynamicForm({fields, setFields}:{fields:Field[],setFields:React.Dispatch<React.SetStateAction<Field[]>> }) {
-
-  const handleInputChange = (id: number, value: string) => {
-    setFields((prevFields) =>
-      prevFields.map((field:Field) =>
-        field.id === id ? { ...field, value } : field,
-      ),
-
-    );
-  }
+export default function DynamicForm({ fields, handleChange }: { fields: Field[], handleChange: (id: number, value: string) => void }) {
 
   return (
     <>
@@ -25,7 +16,7 @@ export default function DynamicForm({fields, setFields}:{fields:Field[],setField
               type="text"
               id={`field-${field.id}`}
               value={field.value}
-              onChange={(e) => handleInputChange(field.id, e.target.value)}
+              onChange={(e) => handleChange(field.id, e.target.value)}
               className="border px-2 py-1"
               required
             />

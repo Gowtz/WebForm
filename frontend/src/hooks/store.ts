@@ -6,13 +6,23 @@ type userType = {
   email?: string;
 };
 type Projects = {
-		id:string
-		createdAt:string
-		updatedAt: string
-		name:string
-		webURL:string
-		description:string
-	
+  id: string
+  createdAt: string
+  updatedAt: string
+  name: string
+  webURL: string
+  description: string
+  isActive: boolean
+}
+
+type Forms = {
+  id: string
+  createdAt: Date
+  updatedAt: Date
+  name: string
+  isActive: boolean
+  projectId: string
+  formSchema: string
 }
 
 export type AuthStateType = {
@@ -27,14 +37,20 @@ const userInitiate: AuthStateType = {
 
 type useStoreType = {
   user: AuthStateType;
-  projects:Projects[] | null ;
+  projects: Projects[]
+  forms: Forms[]
   loginSucess: (data: userType) => void;
   logoutUser: () => void;
-  fetchAllProject:(data:Projects[]) => void;
+  fetchAllProject: (data: Projects[]) => void;
+  fetchAllForm: (data: Forms[]) => void;
+  toggleProjectActive: (id: string) => void;
+  toggleFormActive: (id: string) => void;
 };
+
 export const useStore = create<useStoreType>((set) => ({
   user: userInitiate,
-  projects:null,
+  projects: [],
+  forms: [],
   loginSucess: (data) =>
     set(() => ({
       user: {
@@ -46,9 +62,24 @@ export const useStore = create<useStoreType>((set) => ({
     set(() => ({
       user: userInitiate,
     })),
-  fetchAllProject: (data)=>{
-    set(()=>({
-      projects:data
-    }))
-  }
+  fetchAllProject: (data) =>
+    set(() => ({
+      projects: data
+    })),
+  fetchAllForm: (data) =>
+    set(() => ({
+      forms: data
+    })),
+
+  toggleProjectActive: (id: string) => set((state) => {
+    const newP = state.projects?.map(project => project.id === id ? { ...project, isActive: !project.isActive } : project)
+    return { projects: newP }
+  }),
+
+  toggleFormActive: (id: string) => set((state) => {
+    const newform = state.forms?.map(form => form.id === id ? { ...form, isActive: !form.isActive } : form)
+    return { forms: newform }
+  })
+
+
 }));

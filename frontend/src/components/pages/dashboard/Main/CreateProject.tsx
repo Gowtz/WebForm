@@ -10,11 +10,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 export default function CreateProject() {
-  const [isOpen,setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
     projectName: "",
     webURL: "",
@@ -22,7 +23,7 @@ export default function CreateProject() {
   });
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
-    fetcher.post(`/api/project/create`, formData).then(()=> setIsOpen(false))
+    fetcher.post(`/api/project/create`, formData).then(() => setIsOpen(false))
   }
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -33,7 +34,6 @@ export default function CreateProject() {
   }
   return (
     <div>
-
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger>
           <Button>

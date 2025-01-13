@@ -9,16 +9,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect } from "react";
-import { useStore } from "@/hooks/store";
 import { useFetchProject } from "@/action/useProjects";
-
+import { useStore } from "@/hooks/store";
 export default function Projects() {
-  const { fetchProject } = useFetchProject()
+  const { fetchProject ,toggleActive,deleteProject} = useFetchProject()
   useEffect(() => {
     fetchProject()
   }, [fetchProject])
 
   const { projects } = useStore()
+
   return (
     <>
       <h2 className="my-5">List of projects</h2>
@@ -33,7 +33,7 @@ export default function Projects() {
             >
               <h3>{project.name}</h3>
               <div className="flex items-center gap-3">
-                <Switch id="Active" />
+                <Switch id="Active" checked={project.isActive} onCheckedChange={()=>toggleActive(project.id,!project.isActive)}/>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     <EllipsisVertical />
@@ -43,7 +43,7 @@ export default function Projects() {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>Go to Form</DropdownMenuItem>
                     <DropdownMenuItem>Edit</DropdownMenuItem>
-                    <DropdownMenuItem className="bg-destructive text-secondary dark:text-primary">
+                    <DropdownMenuItem onClick={()=>{deleteProject(project.id)}} className="bg-destructive text-secondary dark:text-primary">
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>

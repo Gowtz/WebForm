@@ -17,11 +17,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useStore } from "@/hooks/store";
-export function SelectProject() {
+export function SelectProject({ handleState }:{handleState:(value:string)=>void} ) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
-  const {projects} = useStore()
-
+  const { projects } = useStore()
+  // React.useEffect(() => {
+  //   handleState(value)
+  // }, [value, handleState])
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -47,8 +49,9 @@ export function SelectProject() {
                 <CommandItem
                   key={project.name}
                   value={project.name}
-                  onSelect={(currentValue) => {
+                  onSelect={(currentValue,id=project.id) => {
                     setValue(currentValue === value ? "" : currentValue);
+                    handleState(id)
                     setOpen(false);
                   }}
                 >
@@ -56,7 +59,7 @@ export function SelectProject() {
                   <Check
                     className={cn(
                       "ml-auto",
-                      value === project.name? "opacity-100" : "opacity-0",
+                      value === project.name ? "opacity-100" : "opacity-0",
                     )}
                   />
                 </CommandItem>

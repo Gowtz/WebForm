@@ -11,7 +11,7 @@ import { createClient } from "redis";
 import { RedisStore } from "connect-redis";
 const FRONT_URL = process.env.FRONT_URL as string;
 const PORT = process.env.PORT || 8000;
-export const URL = process.env.URL as string
+export const BASE_URL = process.env.URL as string
 import "./lib/Auth";
 import { PrismaClient } from '@prisma/client';
 export const prisma = new PrismaClient()
@@ -43,7 +43,6 @@ app.use(
   }),
 );
 
-      console.log(`${URL}/api/auth/callback/google`)
 //Parsing for req body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -83,4 +82,4 @@ const errorhandler: ErrorRequestHandler = (err, _req, res, _next) => {
 
 app.use(errorhandler);
 
-app.listen(PORT, () => console.log(`The server is running in ${URL} `))
+app.listen(PORT, () => console.log(`The server is running in ${BASE_URL} `))
