@@ -1,0 +1,14 @@
+{
+  "name": "@webform/types",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+    "exports":{
+
+    
+    "./*": "./src/*.ts"
+    },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
