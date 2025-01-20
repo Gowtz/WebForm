@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-    "exports":{
-
-    
-    "./*": "./src/*.ts"
-    },
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "zod": "^3.23.8"
+  }
 }
