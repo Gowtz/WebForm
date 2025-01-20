@@ -1,9 +1,7 @@
 "use server";
-import {
-  createProjectPrisma,
-  findProjectThenCreateForm,
-} from "@webform/prisma";
+import { findProjectThenCreateForm, getUser } from "@webform/prisma";
 import { getServerSession } from "next-auth";
+import { prisma } from "@webform/prisma";
 //Interface
 export interface formInput {
   name: string;
@@ -18,9 +16,10 @@ export interface projectInput {
 
 export const getuserformSerevr = async () => {
   const session = await getServerSession();
-  console.log(session);
   return session?.user;
 };
+
+
 //Create Form
 export const createForm = async ({
   formSchema,
@@ -48,27 +47,19 @@ export const createForm = async ({
   }
 };
 
-// Create Project
-export const createProject = async ({
-  description,
-  projectName,
-  webURL,
-}: projectInput) => {
-  try {
-    const session = await getServerSession();
-    if (session?.user?.email) {
-       await createProjectPrisma({
-        description,
-        projectName,
-        webURL,
-        email: session.user.email,
-      });
-      return { msg: "Done" };
-    } else {
-      return { error: "Unauthorized" };
+export const getAllForm = async()=>{
+
+    const session = await getServerSession()
+    if(session?.user?.email){
+
+        const user = await getUser(session.user.email)
+        const projects = await prisma.form.findMany({where:{
+            userId:user?.id,
+            
+        }})
+        return projects
     }
-  } catch (error) {
-    console.log(error);
-    return { error: "Unauthorized" };
-  }
-};
+    else{
+        return null
+    }
+}

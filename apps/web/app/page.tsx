@@ -1,5 +1,4 @@
 import WhoAmI from "@/components/WhoAmI"
-import { Button } from "@webform/ui/components/button"
 export default function Page() {
   return (
     <div className="flex items-center justify-center min-h-svh">
