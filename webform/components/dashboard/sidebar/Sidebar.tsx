@@ -62,7 +62,6 @@ export function AppSidebar() {
     image: session?.user?.image as string
   }
   const pathname = usePathname();
-  console.log(pathname)
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader>

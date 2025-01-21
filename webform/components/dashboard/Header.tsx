@@ -14,7 +14,6 @@ function capitalizeFirstLetter(string: string) {
 export default function Header() {
   const pathname = usePathname()
   const pathnames = pathname.split('/').filter(path => path)
-  console.log(pathnames);
 
   return (
     <header className="w-full h-20 border ">
@@ -25,7 +24,6 @@ export default function Header() {
           <Breadcrumb>
             <BreadcrumbList>
               {pathnames.map((path, index) => {
-                console.log(`/${path}`)
                 return (
                   <React.Fragment key={index}>
                     {index !== 0 &&
