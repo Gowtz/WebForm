@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prismaclient"
 import { getServerSession } from "next-auth"
 import { revalidatePath } from "next/cache"
 
+// Todo: add pagination
 export const getAllProject = async () => {
   const user = await getServersideUser()
   const projects = await prisma.project.findMany({
@@ -42,11 +43,24 @@ export const toggleActive = async ({ isActive, projectId }: { isActive: boolean,
 }
 // Todo: 1.Parse input with zod 
 // 2. Project limit validation
-// 3. Add pagination
 
 export const addProject = async ({ name, webURL, description }: { name: string, webURL: string, description: string }) => {
   const user = await getServersideUser()
   const project = await prisma.project.create({
+    data: {
+      userId: user?.id as string,
+      name, webURL, description
+    }
+  })
+  revalidatePath('/dashboard/projects')
+  console.log(project)
+  return project
+}
+
+export const editProject= async ({ name, webURL, description ,projectId}: { name: string, webURL: string, description: string,projectId:string }) => {
+  const user = await getServersideUser()
+  const project = await prisma.project.update({
+    where:{id:projectId},
     data: {
       userId: user?.id as string,
       name, webURL, description

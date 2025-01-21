@@ -1,5 +1,5 @@
 import CreateProject from "@/components/dashboard/projects/CreateProject";
-import Projects from "@/components/dashboard/projects/Project";
+import Projects from "@/components/dashboard/projects/Projects";
 export default function page() {
   return (
     <div>

@@ -6,6 +6,7 @@ export default async function Projects() {
   const projects = await getAllProject()
   return (
     <>
+
       {
         projects &&
 
@@ -17,8 +18,9 @@ export default async function Projects() {
             >
               <h3>{project.name}</h3>
               <div className="flex items-center gap-3">
-                <ToggleProject isActive={project.isActive} id={project.id}/>
-                  <Dropdowns projectId={project.id}/>
+                <ToggleProject isActive={project.isActive} id={project.id} />
+
+                <Dropdowns description={project.description as string} webURL={project.webURL} name={project.name} projectId={project.id} />
               </div>
             </li>
           ))}
