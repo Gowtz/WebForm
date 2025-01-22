@@ -7,7 +7,7 @@ import { Slash } from "lucide-react"
 import Link from "next/link"
 import { SidebarTrigger } from "../ui/sidebar"
 import { Separator } from "../ui/separator"
-function capitalizeFirstLetter(string: string) {
+export function capitalizeFirstLetter(string: string) {
   if (!string) return "";
   return string.charAt(0).toUpperCase() + string.slice(1);
 }

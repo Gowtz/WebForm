@@ -24,7 +24,7 @@ export const deleteProject = async({projectId}:{projectId:string})=>{
         id:projectId
       }
     })
-revalidatePath('/dashboard/project')
+revalidatePath('/dashboard/projects')
   }
 }
 
@@ -53,7 +53,6 @@ export const addProject = async ({ name, webURL, description }: { name: string, 
     }
   })
   revalidatePath('/dashboard/projects')
-  console.log(project)
   return project
 }
 

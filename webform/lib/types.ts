@@ -1,19 +1,20 @@
 export type Projects = {
     id: string;
-    createdAt: string;
-    updatedAt: string;
+    createdAt:Date;
+    updatedAt:Date;
     name: string;
     webURL: string;
-    description: string;
+    description?: string|null;
     isActive: boolean;
   };
   
   export type Forms = {
     id: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt:Date;
+    updatedAt:Date;
     name: string;
     isActive: boolean;
-    projectId: string;
+    project: Projects
     formSchema: string;
+  apiURL?:string
   };

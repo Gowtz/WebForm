@@ -1,7 +1,15 @@
+import { getAllForms } from "@/action/forms";
+import Form from "@/components/dashboard/forms/Form";
 
-export default function page() {
+export default async function page() {
+  const forms = await getAllForms()
   return (
-    <div>Forms</div>
+    <div>
+
+      {forms &&
+        <Form data={forms}/>
+      }
+    </div>
   )
 }
 
