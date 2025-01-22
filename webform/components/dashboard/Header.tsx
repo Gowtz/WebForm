@@ -7,6 +7,7 @@ import { Slash } from "lucide-react"
 import Link from "next/link"
 import { SidebarTrigger } from "../ui/sidebar"
 import { Separator } from "../ui/separator"
+import { ModeToggle } from "../theme"
 export function capitalizeFirstLetter(string: string) {
   if (!string) return "";
   return string.charAt(0).toUpperCase() + string.slice(1);
@@ -49,6 +50,7 @@ export default function Header() {
             </BreadcrumbList>
           </Breadcrumb>
         </div>
+        <ModeToggle />
       </nav>
     </header>
   )

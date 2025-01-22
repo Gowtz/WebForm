@@ -21,7 +21,7 @@ export const ToggleFormSwitch = ({ isActive, formId }: { isActive: boolean, form
     <TooltipProvider>
 
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger asChild>
         <Switch checked={active} onCheckedChange={() => handleToggle()} />
       </TooltipTrigger>
       <TooltipContent>
