@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { getAllForms } from "../controller/form";
+import { formSubmit, getAllForms } from "../controller/form";
 
 const router = Router()
 
-router.post('/submitform')
+router.post('/form',formSubmit)
 router.get('/ge',getAllForms)
 
 export default router

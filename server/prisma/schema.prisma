@@ -19,6 +19,7 @@ model User {
   Authenticator Authenticator[]
   Projects      Project[]
   Forms         Form[]
+  api           Api[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -91,19 +92,38 @@ model Project {
   forms       Form[]
   userId      String
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Api         Api[]
 }
 
 model Form {
-  id          String   @id @default(cuid())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  name        String
-  isActive    Boolean  @default(true)
-  projectId   String
-  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  formSchema  String
-  secret      String
-  apiURL      String
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  name       String
+  isActive   Boolean  @default(true)
+  projectId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  formSchema String
+  userId     String
+  apiId      String
+  api        Api      @relation(fields: [apiId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Api {
+  id        String     @id @default(cuid())
+  secret    String     @unique
+  userId    String
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  Form      Form[]
+  FormData  FormData[]
+}
+
+model FormData {
+  id    String @id @default(cuid())
+  apiId String
+  data  String
+  api   Api    @relation(fields: [apiId], references: [id], onDelete: Cascade)
 }

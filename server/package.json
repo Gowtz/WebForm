@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"tsc -b && node dist",
-    "dev":"tsc -w & node dist",
-    "db:generate":"prisma generate --schema src/model/schema.prisma"
+    "start": "tsc -b && node dist",
+    "dev": "tsc -w & node dist",
+    "db:generate": "pnpx prisma generate  && pnpx prisma migrate dev "
   },
   "keywords": [],
   "author": "",
@@ -20,6 +20,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
     "prisma": "^6.3.0"
   }
 }

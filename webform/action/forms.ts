@@ -14,11 +14,13 @@ export const getAllForms = async () => {
         userId: user?.id
       },
       include: {
-        project: true
+        project: true,
+        Api:true
       }, orderBy: {
         createdAt: 'asc'
       }
     })
+    console.log(forms)
     return forms
   }
 }
@@ -47,24 +49,30 @@ export const deleteForm = async ({ formId }: { formId: string }) => {
         id: formId
       },
     })
-  revalidatePath('/dashboard/forms')
+    revalidatePath('/dashboard/forms')
     return form
   }
 }
 
 export const createForm = async ({ projectId, name, formSchema }: { projectId: string, name: string, formSchema: string }) => {
   const user = await getServersideUser()
-  console.log(projectId, name, formSchema)
   if (user) {
-    const hash = generateRandomString()
+    const secret = generateRandomString()
+    const API = await prisma.api.create({
+      data: {
+        projectId,
+        userId: user.id,
+        secret
+      }
+    })
+   console.log(projectId, name, formSchema,API)
     const project = await prisma.form.create({
       data: {
         userId: user.id,
         projectId,
         formSchema,
         name,
-        apiURL: `${BACKEND_URL}/${hash}`,
-        secret: hash,
+        apiId:API.id
       }
     })
 
@@ -74,22 +82,18 @@ export const createForm = async ({ projectId, name, formSchema }: { projectId: s
 }
 
 
-export const  editForm= async ({ projectId, name, formSchema ,formId}: {formId:string, projectId: string, name: string, formSchema: string }) => {
+export const editForm = async ({ projectId, name, formSchema, formId }: { formId: string, projectId: string, name: string, formSchema: string }) => {
   const user = await getServersideUser()
-  console.log(projectId, name, formSchema)
   if (user) {
-    const hash = generateRandomString()
     const project = await prisma.form.update({
-      where:{
-        id:formId
+      where: {
+        id: formId
       },
       data: {
         userId: user.id,
         projectId,
         formSchema,
         name,
-        apiURL: `${BACKEND_URL}/${hash}`,
-        secret: hash,
       }
     })
 
