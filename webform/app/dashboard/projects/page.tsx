@@ -1,5 +1,7 @@
 import CreateProject from "@/components/dashboard/projects/CreateProject";
 import Projects from "@/components/dashboard/projects/Projects";
+import ProjectSkeleton from "@/components/dashboard/projects/ProjectSkeleton";
+import { Suspense } from "react";
 export default function page() {
   return (
     <div>
@@ -9,7 +11,10 @@ export default function page() {
 
       <CreateProject />
       </div>
-      <Projects />
+      <Suspense fallback={<ProjectSkeleton />}>
+
+        <Projects />
+      </Suspense>
     </div>
   )
 }

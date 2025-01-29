@@ -19,6 +19,7 @@ import { EditForm } from "./EditForm";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { capitalizeFirstLetter } from "../Header";
 
+
 export default function Forms({ forms }: { forms: FormType[] }) {
   const { toast } = useToast()
   const { mutate } = useMutation({
@@ -39,20 +40,19 @@ export default function Forms({ forms }: { forms: FormType[] }) {
 
   return (
     <div>
-
-        <ul className="border rounded-lg divide-y">
+        <ul className=" divide-y">
           {forms?.map((form: FormType) => (
-            <li key={form.id}>
+            <li key={form.id} className="border rounded-lg">
               <Accordion type="single" collapsible>
                 <AccordionItem value="item-1">
-                  <div className="flex justify-between px-10 py-5 items-center">
+                  <div className="flex justify-between px-10 py-3 items-center">
                     <AccordionTrigger>
                       <h3 className="mx-5 font-bold text-xl ">{capitalizeFirstLetter(form.name)}</h3>
                     </AccordionTrigger>
                     <div className="flex items-center gap-5">
                       <Badge>{form.project.name}</Badge>
 
-                          <ToggleFormSwitch isActive={form.isActive} formId={form.id} />
+                      <ToggleFormSwitch isActive={form.isActive} formId={form.id} />
                       <div className="buttonGroup flex gap-2 items-center">
                         <EditForm form={form}>
                           <div className="bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 h-9 px-4 py-2">
@@ -73,16 +73,16 @@ export default function Forms({ forms }: { forms: FormType[] }) {
                       className="py-2 px-5 rounded-lg flex gap-3 cursor-pointer items-center  truncate"
                       onClick={handleCopy}
                     >
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <Button variant="outline">{form.apiURL}</Button>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p>{form.apiURL}</p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                      <TooltipProvider>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button variant="outline">{form.apiURL}</Button>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{form.apiURL}</p>
+                          </TooltipContent>
+                        </Tooltip>
+                      </TooltipProvider>
                       <Clipboard size={15} />
                     </span>
                   </AccordionContent>
@@ -92,7 +92,7 @@ export default function Forms({ forms }: { forms: FormType[] }) {
           ))}
         </ul>
 
-        <h3 className="text-primary text-center my-10">Your forms</h3>
+      <h3 className="text-primary text-center my-10">Your forms</h3>
     </div>
   )
 }

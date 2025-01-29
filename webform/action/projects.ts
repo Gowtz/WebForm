@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache"
 
 // Todo: add pagination
 export const getAllProject = async () => {
+
+
   const user = await getServersideUser()
   const projects = await prisma.project.findMany({
     where: {
