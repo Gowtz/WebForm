@@ -25,7 +25,11 @@ export const formSubmit = async (req: Request, res: Response) => {
           }
         }
       )
-      if (api) {
+      // Checking with registered url
+      if (headers.host === api?.project.webURL) {
+        res.json({ "error": "The Registered host does not match" })
+      }
+      else if (api) {
         const formschema = JSON.parse(api?.Form[0].formSchema as string)
         const body = req.body
         const newdata = new Object()
@@ -38,7 +42,7 @@ export const formSubmit = async (req: Request, res: Response) => {
           }
         })
         res.status(200).json({
-          "msg":"submited"
+          "msg": "submited"
         })
       }
     } catch (err) {
