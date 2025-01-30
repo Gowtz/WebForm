@@ -20,7 +20,6 @@ export const getAllForms = async () => {
         createdAt: 'asc'
       }
     })
-    console.log(forms)
     return forms
   }
 }
@@ -65,7 +64,6 @@ export const createForm = async ({ projectId, name, formSchema }: { projectId: s
         secret
       }
     })
-   console.log(projectId, name, formSchema,API)
     const project = await prisma.form.create({
       data: {
         userId: user.id,

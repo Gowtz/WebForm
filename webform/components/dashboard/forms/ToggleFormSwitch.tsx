@@ -5,11 +5,14 @@ import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { Tooltip, TooltipTrigger } from "@/components/ui/tooltip";
 import { TooltipContent, TooltipProvider } from "@/components/ui/tooltip";
+import { useStore } from "@/hooks/store";
 
 export const ToggleFormSwitch = ({ isActive, formId }: { isActive: boolean, formId: string }) => {
   const [active, setActive] = useState(isActive)
+  const {fetchForms} = useStore()
   const { mutate } = useMutation({
-    mutationFn: toggleActiveForm
+    mutationFn: toggleActiveForm,
+    onSuccess:fetchForms
   })
   function handleToggle() {
     mutate({ isActive: !active, formId })

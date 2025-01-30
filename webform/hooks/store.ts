@@ -19,4 +19,5 @@ export const useStore = create<Store>((set) => ({
     const projects = await getAllProject()
     set({ projects })
   },
+
 }))

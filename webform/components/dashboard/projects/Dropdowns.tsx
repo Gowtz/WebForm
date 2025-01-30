@@ -14,10 +14,13 @@ import EditProject from "./EditProject";
 import { useState } from "react";
 import { Dialog } from "@/components/ui/dialog";
 import { DialogTrigger } from "@radix-ui/react-dialog";
+import { useStore } from "@/hooks/store";
 
 export default function Dropdowns({ projectId, name, webURL, description }: { projectId: string, name: string, description?: string, webURL: string }) {
+  const {fetchProjects} = useStore()
   const { mutate } = useMutation({
-    mutationFn: deleteProject
+    mutationFn: deleteProject,
+    onSuccess: fetchProjects
   })
   const [isOpen, setIsOpen] = useState(false)
 function setClose(){

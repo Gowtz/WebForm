@@ -2,45 +2,28 @@
 import { Button } from "@/components/ui/button";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
-import { Clipboard, Pen, Trash } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import {Pen, Trash } from "lucide-react";
 import { Forms as FormType } from "@/lib/types";
 import { ToggleFormSwitch } from "./ToggleFormSwitch";
 import { useMutation } from "@tanstack/react-query";
 import { deleteForm } from "@/action/forms";
 import { EditForm } from "./EditForm";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { capitalizeFirstLetter } from "../Header";
+import { useStore } from "@/hooks/store";
 
 
 export default function Forms({ forms }: { forms: FormType[] }) {
-  const { toast } = useToast()
+  const {fetchForms} = useStore()
   const { mutate } = useMutation({
-    mutationFn: deleteForm
+    mutationFn: deleteForm,
+    onSuccess:fetchForms
   })
-  const handleCopy = (e: React.MouseEvent<HTMLSpanElement>) => {
-    navigator.clipboard
-      .writeText(e.currentTarget.innerText)
-      .then(() => {
-        toast({
-          title: "Copied URL",
-        });
-      })
-      .catch((error) => {
-        console.error("Failed to copy:", error);
-      });
-  };
+
 
   return (
     <div>
-      <ul className="rounded-lg border divide-y">
+      <ul className={`rounded-lg ${forms.length > 0 && "border"} divide-y`}>
         {forms?.map((form: FormType) => (
           <li key={form.id}  className="h-16 flex justify-between px-6 items-center  ">
               <h3 className="mx-5 font-bold text-xl ">{capitalizeFirstLetter(form.name)}</h3>
@@ -65,7 +48,13 @@ export default function Forms({ forms }: { forms: FormType[] }) {
         ))}
       </ul>
 
-      <h3 className="text-stone-400 text-center text-sm my-10">Your forms</h3>
+      {forms && forms.length > 0 ?
+
+        <h3 className="text-stone-400 text-center mt-7 text-sm"> Your forms</h3>
+        :
+
+        <h3 className="text-stone-400 text-center mt-7 text-sm"> No form yet. Try creating one </h3>
+      }
     </div>
   )
 }

@@ -23,6 +23,10 @@ const inputTypes = [
     label: "Text",
   },
   {
+    value: "email",
+    label: "Email",
+  },
+  {
     value: "textarea",
     label: "Textarea",
   },

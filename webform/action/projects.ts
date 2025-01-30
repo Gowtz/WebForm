@@ -54,7 +54,6 @@ export const addProject = async ({ name, webURL, description }: { name: string, 
       name, webURL, description
     }
   })
-  revalidatePath('/dashboard/projects')
   return project
 }
 
@@ -68,7 +67,6 @@ export const editProject= async ({ name, webURL, description ,projectId}: { name
     }
   })
   revalidatePath('/dashboard/projects')
-  console.log(project)
   return project
 }
 

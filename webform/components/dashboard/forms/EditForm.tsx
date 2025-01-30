@@ -14,22 +14,24 @@ import DynamicForm from "./DynamicAddInput";
 import { useMutation } from "@tanstack/react-query";
 import { editForm } from "@/action/forms";
 import { Forms } from "@/lib/types";
+import { useStore } from "@/hooks/store";
 export type Field = {
   id: number;
-  label: string;
   value: string;
   type:string;
 };
 
 export const EditForm= ({ children ,form}: { children: ReactNode ,form:Forms}) => {
 const [isOpen,setIsOpen] = useState(false)
+  const {fetchForms} = useStore()
   const [formData, setFormData] = useState({
     formName: form.name,
     formDataSchema:JSON.parse(form.formSchema),
     projectId: form.project.id,
   })
   const { mutate } = useMutation({
-    mutationFn: editForm
+    mutationFn: editForm,
+    onSuccess:fetchForms
   })
   const [fields, setFields] = useState<Field[]>(
     JSON.parse(form.formSchema),
@@ -42,14 +44,12 @@ const [isOpen,setIsOpen] = useState(false)
   const handleAddField = () => {
     const newField: Field = {
       id: fields.length + 1,
-      label: `Field ${fields.length + 1}`,
       value: "",
       type:"text"
     };
     setFields((prevFields) => [...prevFields, newField]);
   }
 
-  // FIXME: type not changing
   const handleInputChange = ({id,value}:{id: number, value: string}) => {
     setFields((prevFields) =>
       prevFields.map((field) =>
@@ -58,6 +58,13 @@ const [isOpen,setIsOpen] = useState(false)
     );
   }
 
+  const handleDelete= ({id}:{id: number}) => {
+    setFields((prevFields) =>
+      prevFields.filter((field) =>
+        field.id != id 
+      ),
+    );
+  }
   const handleSelectChange= ({id,type}:{id: number,type:string}) => {
     setFields((prevFields) =>
       prevFields.map((field) =>
@@ -103,7 +110,7 @@ const [isOpen,setIsOpen] = useState(false)
                     Add Field
                   </Button>
                   <div className="ele max-h-[400px] overflow-y-scroll my-5">
-                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange}/>
+                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} handleDelete={handleDelete}/>
                   </div>
                 </div>
                 <Button>Create</Button>

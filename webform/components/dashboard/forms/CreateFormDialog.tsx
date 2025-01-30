@@ -13,25 +13,27 @@ import { Button } from "@/components/ui/button";
 import DynamicForm from "./DynamicAddInput";
 import { useMutation } from "@tanstack/react-query";
 import { createForm } from "@/action/forms";
+import { useStore } from "@/hooks/store";
 export type Field = {
   id: number;
-  label: string;
   value: string;
   type:string
 };
 
 export const CreateFormDialog = ({ children }: { children: ReactNode }) => {
 const [isOpen,setIsOpen] = useState(false)
+  const {fetchForms} = useStore()
   const [formData, setFormData] = useState({
     formName: "",
     formDataSchema: "",
     projectId: "",
   })
   const { mutate } = useMutation({
-    mutationFn: createForm
+    mutationFn: createForm,
+    onSuccess:fetchForms
   })
   const [fields, setFields] = useState<Field[]>([
-    { id: 1, label: "Field 1", value: "" ,type:"text"},
+    { id: 1, value: "" ,type:"text"},
   ]);
   useEffect(() => {
     setFormData(prev => ({ ...prev, formDataSchema: JSON.stringify(fields) }))
@@ -41,7 +43,6 @@ const [isOpen,setIsOpen] = useState(false)
   const handleAddField = () => {
     const newField: Field = {
       id: fields.length + 1,
-      label: `Field ${fields.length + 1}`,
       value: "",
       type:"text"
     };
@@ -55,10 +56,17 @@ const [isOpen,setIsOpen] = useState(false)
     );
   }
   const handleSelectChange= ({id,type}:{id: number,type:string}) => {
-    console.log(id,type)
     setFields((prevFields) =>
       prevFields.map((field) =>
         field.id === id ? { ...field,type:type } : field,
+      ),
+    );
+  }
+
+  const handleDelete= ({id}:{id: number}) => {
+    setFields((prevFields) =>
+      prevFields.filter((field) =>
+        field.id != id 
       ),
     );
   }
@@ -70,7 +78,6 @@ const [isOpen,setIsOpen] = useState(false)
   }
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    // console.log({projectId:formData.projectId,name:formData.formName,formSchema:formData.formDataSchema})
     mutate({projectId:formData.projectId,name:formData.formName,formSchema:formData.formDataSchema})
     setIsOpen(false)
   }
@@ -88,7 +95,7 @@ const [isOpen,setIsOpen] = useState(false)
               <div className="flex flex-col gap-7">
                 <div>
                   <Label>Form Name</Label>
-                  <Input placeholder="Form name" className="mt-5" id="formName" name="formName" value={formData.formName} onChange={handleChange} />
+                  <Input placeholder="Form name" className="mt-5" id="formName" name="formName" value={formData.formName} onChange={handleChange} required/>
                 </div>
                 <div>
                   <Label>Select Project</Label>
@@ -100,7 +107,7 @@ const [isOpen,setIsOpen] = useState(false)
                     Add Field
                   </Button>
                   <div className="ele max-h-[400px] overflow-y-scroll my-5">
-                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange}/>
+                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} handleDelete={handleDelete}/>
                   </div>
                 </div>
                 <Button>Create</Button>

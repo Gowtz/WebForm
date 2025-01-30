@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useMutation } from "@tanstack/react-query";
 import { addProject } from "@/action/projects";
+import { useStore } from "@/hooks/store";
 export default function CreateProject() {
   const [isOpen, setIsOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -23,8 +24,9 @@ export default function CreateProject() {
     webURL: "",
     description: "",
   });
+  const {fetchProjects} = useStore()
   // TODO: also handle project limit
-  const { mutate } = useMutation({ mutationFn: addProject })
+  const { mutate } = useMutation({ mutationFn: addProject, onSuccess:fetchProjects })
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     mutate({ name: formData.projectName, description: formData.description, webURL: formData.webURL })
