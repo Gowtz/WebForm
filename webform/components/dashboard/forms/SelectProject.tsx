@@ -45,6 +45,7 @@ export function SelectProject({ handleState ,id}: { handleState: (value:  string
           role="combobox"
           aria-expanded={open}
           className="w-[200px] justify-between"
+          
         >
           {value
             ? projects?.find((project) => project.name === value)?.name

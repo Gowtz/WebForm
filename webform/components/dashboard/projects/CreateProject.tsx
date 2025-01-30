@@ -67,6 +67,7 @@ export default function CreateProject() {
               placeholder="My Project"
               onChange={handleChange}
               className=" my-5"
+              required
             />
             <Label htmlFor="url" className="text-right">
               Url of the project
@@ -78,6 +79,7 @@ export default function CreateProject() {
               placeholder="www.google.com"
               onChange={handleChange}
               className="my-5"
+              required
             />
             <Label htmlFor="url" className="text-right">
               description
@@ -89,6 +91,7 @@ export default function CreateProject() {
               placeholder="Write about your website"
               onChange={handleChange}
               className="my-5"
+              required
             />
             <Button type="submit">Submit</Button>
           </form>
