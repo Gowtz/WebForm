@@ -15,7 +15,7 @@ export const getAllForms = async () => {
       },
       include: {
         project: true,
-        Api:true
+        api:true
       }, orderBy: {
         createdAt: 'asc'
       }
@@ -23,6 +23,7 @@ export const getAllForms = async () => {
     return forms
   }
 }
+
 
 export const toggleActiveForm = async ({ isActive, formId }: { isActive: boolean, formId: string }) => {
   const user = await getServersideUser()

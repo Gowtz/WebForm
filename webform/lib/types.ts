@@ -16,7 +16,7 @@ export type Forms = {
   isActive: boolean;
   project: Projects
   formSchema: string;
-  Api:Api;
+  api:Api;
 };
 export type Api = {
   id:string

@@ -61,9 +61,15 @@ export const formSubmit = async (req: Request, res: Response) => {
             apiId: api?.id
           }
         })
-        res.status(200).json({
-          "msg": "submited"
-        })
+        res.send(`
+<button onclick="goBack()">Go Back</button>
+
+<script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
+`)
       }
     } catch (err) {
       res.status(500).json({ "Error": `Operation Failed with ${err}` })

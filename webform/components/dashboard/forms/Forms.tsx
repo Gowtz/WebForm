@@ -11,6 +11,7 @@ import { deleteForm } from "@/action/forms";
 import { EditForm } from "./EditForm";
 import { capitalizeFirstLetter } from "../Header";
 import { useStore } from "@/hooks/store";
+import Link from "next/link";
 
 
 export default function Forms({ forms }: { forms: FormType[] }) {
@@ -20,13 +21,14 @@ export default function Forms({ forms }: { forms: FormType[] }) {
     onSuccess:fetchForms
   })
 
-
   return (
     <div>
       <ul className={`rounded-lg ${forms.length > 0 && "border"} divide-y`}>
         {forms?.map((form: FormType) => (
           <li key={form.id}  className="h-16 flex justify-between px-6 items-center  ">
+            <Link href={`/dashboard/forms/${form.id}`}>
               <h3 className="mx-5 font-bold text-xl ">{capitalizeFirstLetter(form.name)}</h3>
+            </Link>
               <div className="flex items-center gap-5">
                 <Badge>{form.project.name}</Badge>
 
