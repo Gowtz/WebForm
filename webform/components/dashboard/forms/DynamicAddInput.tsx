@@ -41,7 +41,7 @@ return ( <div className="flex flex-col space-y-2 my-5 px-2">
           required
         />
         <SelectInputType val={field.type} handleChange={handleSelectChange} id={field.id} />
-        <Button  onClick={()=>{handleDelete({id:field.id})}} className="hover:bg-red-600">
+        <Button  onClick={()=>{handleDelete({id:field.id})}} className="hover:bg-red-600 hover:text-white">
           <Trash />
         </Button>
       </div>
