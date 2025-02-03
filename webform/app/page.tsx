@@ -1,4 +1,5 @@
 import Card from "@/components/dashboard/Imagetilt";
+import Header from "@/components/HeaderLanding";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CircleCheckBig } from "lucide-react";
@@ -7,6 +8,7 @@ import Link from "next/link";
 export default async function Home() {
   return (
     <div className="mx-auto ">
+      <Header />
 
       <div className="hero relativeh h-[700px] w-full flex flex-col items-center justify-center gap-3">
         <h1 className="text-6xl font-semibold text-center">Effortless Form Handling for Static Websites</h1>
@@ -23,8 +25,7 @@ export default async function Home() {
 
       <div className="relative min-h-screen ">
 
-
-        <div className="features my-20 flex justify-between max-w-[1400px] mx-auto ">
+        <div className="features my-20 flex justify-between max-w-[1400px] mx-auto " id="about">
           <h2 className="text-center text-8xl mb-10 ml-16">Features</h2>
           <div className="flex flex-col justify-between gap-10">
             <div className="tab">
@@ -71,7 +72,7 @@ export default async function Home() {
       </div>
 
 
-      <div className="relative plans mb-32">
+      <div className="relative plans mb-32" id="pricing">
         <TooltipProvider>
           <h2 className="text-center text-4xl mt-32">What About Plans</h2>
           <div className="flex justify-center gap-20 mt-40">

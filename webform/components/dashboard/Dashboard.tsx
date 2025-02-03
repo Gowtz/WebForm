@@ -2,7 +2,7 @@
 import { getDashboardData } from '@/action/dashboard'
 import { useQuery } from '@tanstack/react-query'
 import React, { useEffect } from 'react'
-import { Table, TableCaption, TableHead, TableHeader, TableRow } from '../ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { useSession } from 'next-auth/react'
 import { useStore } from '@/hooks/store'
 
@@ -57,14 +57,17 @@ export default function Dashboard() {
 
                 Your recent form recived
               </TableCaption>
+                <TableBody>
+
               {data.formdata && data.formdata.map((formdata, index) =>
                 <TableRow key={formdata.id}>
-                  <TableHead>{index + 1}</TableHead>
-                  <TableHead>{formdata.api.Form[0].name}</TableHead>
-                  <TableHead className='text-right'>{formdata.createdAt.toLocaleString()}</TableHead>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>{formdata.api.Form[0].name}</TableCell>
+                  <TableCell className='text-right'>{formdata.createdAt.toLocaleString()}</TableCell>
 
                 </TableRow>
               )}
+                </TableBody>
             </Table>
           </div>
         </div>

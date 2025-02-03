@@ -29,7 +29,7 @@ export default async function Page({ params }: { params: Promise<{ formid: strin
         <Table>
           <TableCaption>A list of your recent forms Submission.</TableCaption>
           <TableHeader>
-            <TableRow>
+            <TableRow key={1}>
               {/* @ts-ignore */}
               {JSON.parse(forms.formSchema).map((ele,index) => <>
                 <TableHead key={index}>{ele.value} </TableHead>
