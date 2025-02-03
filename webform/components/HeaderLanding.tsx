@@ -4,6 +4,7 @@ import { Button } from "./ui/button"
 import Image from "next/image"
 import Link from "next/link"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { ModeToggle } from "./theme"
 
 export default function Header() {
   const { data: session } = useSession()
@@ -12,7 +13,7 @@ export default function Header() {
       <nav className="container mx-auto flex justify-between items-center">
         <div className="flex gap-5 items-center"> <Image className="border border-slate-200  border-opacity-25 rounded-lg" width={36} height={36} src={'/Icon.png'} alt="Logo" /> <div className="logo">Webform</div></div>
         <div className="navlinks">
-          <ul className="flex gap-3">
+          <ul className="flex items-center gap-3">
             <Link href={'#'}>
               <li>Home</li>
             </Link>
@@ -34,6 +35,7 @@ export default function Header() {
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
+            <ModeToggle />
           </ul>
         </div>
         <div>
@@ -51,7 +53,7 @@ export default function Header() {
             </div>
             :
             <div className="flex gap-3">
-              <Button variant='secondary' onClick={() => { signIn() }}>
+              <Button  onClick={() => { signIn() }}>
                 Get Started
               </Button>
             </div>

@@ -136,12 +136,7 @@ export default async function Home() {
           </div>
 
         </TooltipProvider>
-        <div className="absolute -top-32 right-56  -z-50 flex items-center justify-center">
-          <div className="w-[500px] h-[800px] rounded-full bg-neutral-600 blur-[400px] opacity-40"></div>
-        </div>
-        <div className="absolute bottom-16 -left-36 flex items-center justify-center">
-          <div className="w-96 h-96 bg-neutral-500 blur-[200px] opacity-40"></div>
-        </div>
+   
       </div>
 
       <div className="absolute -top-32 -left-56  flex items-center justify-center">

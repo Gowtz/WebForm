@@ -19,7 +19,7 @@ html{
   @apply text-neutral-500
 }
 .card{
-  @apply rounded-lg w-72 bg-neutral-900 px-7 border hover:border-slate-300 transition-all duration-300 
+  @apply rounded-lg w-72 bg-neutral-300 dark:bg-neutral-900 px-7 border hover:border-slate-300 transition-all duration-300 
 }
 
 .smalScale{
@@ -43,7 +43,7 @@ html{
 @apply text-6xl  mt-7
 }
 .card ul{
-  @apply flex flex-col gap-3 text-neutral-400 my-7 text-xs
+  @apply flex flex-col gap-3 text-neutral-700 dark:text-neutral-400 my-7 text-xs
 }
 
 .card ul li {
