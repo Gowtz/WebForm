@@ -26,7 +26,9 @@ export default function CreateProject() {
   });
   const {fetchProjects} = useStore()
   // TODO: also handle project limit
-  const { mutate } = useMutation({ mutationFn: addProject, onSuccess:fetchProjects })
+  const { mutate } = useMutation({ mutationFn: addProject,onError:(error)=>{
+      console.error('Error adding project:', error);
+  }, onSuccess:fetchProjects })
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
     mutate({ name: formData.projectName, description: formData.description, webURL: formData.webURL })

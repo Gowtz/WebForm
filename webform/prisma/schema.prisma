@@ -21,6 +21,7 @@ model User {
   Forms         Form[]
   Projects      Project[]
   sessions      Session[]
+  subscription  Subscription?
 }
 
 model Account {
@@ -119,4 +120,21 @@ model FormData {
   apiId String
   data  String
   api   Api    @relation(fields: [apiId], references: [id], onDelete: Cascade)
+}
+
+model Subscription {
+  id        String    @id @default(cuid())
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      PlanType  @default(STARTER)
+  isActive  Boolean   @default(true)
+  endDate   DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
+}
+
+enum PlanType {
+  STARTER
+  GROWTH
+  PRO
 }

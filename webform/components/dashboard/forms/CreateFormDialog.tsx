@@ -17,12 +17,12 @@ import { useStore } from "@/hooks/store";
 export type Field = {
   id: number;
   value: string;
-  type:string
+  type: string
 };
 
 export const CreateFormDialog = ({ children }: { children: ReactNode }) => {
-const [isOpen,setIsOpen] = useState(false)
-  const {fetchForms} = useStore()
+  const [isOpen, setIsOpen] = useState(false)
+  const { fetchForms } = useStore()
   const [formData, setFormData] = useState({
     formName: "",
     formDataSchema: "",
@@ -30,10 +30,10 @@ const [isOpen,setIsOpen] = useState(false)
   })
   const { mutate } = useMutation({
     mutationFn: createForm,
-    onSuccess:fetchForms
+    onSuccess: fetchForms
   })
   const [fields, setFields] = useState<Field[]>([
-    { id: 1, value: "" ,type:"text"},
+    { id: 1, value: "", type: "text" },
   ]);
   useEffect(() => {
     setFormData(prev => ({ ...prev, formDataSchema: JSON.stringify(fields) }))
@@ -44,29 +44,29 @@ const [isOpen,setIsOpen] = useState(false)
     const newField: Field = {
       id: fields.length + 1,
       value: "",
-      type:"text"
+      type: "text"
     };
     setFields((prevFields) => [...prevFields, newField]);
   }
-  const handleInputChange = ({id,value}:{id: number, value: string}) => {
+  const handleInputChange = ({ id, value }: { id: number, value: string }) => {
     setFields((prevFields) =>
       prevFields.map((field) =>
         field.id === id ? { ...field, value } : field,
       ),
     );
   }
-  const handleSelectChange= ({id,type}:{id: number,type:string}) => {
+  const handleSelectChange = ({ id, type }: { id: number, type: string }) => {
     setFields((prevFields) =>
       prevFields.map((field) =>
-        field.id === id ? { ...field,type:type } : field,
+        field.id === id ? { ...field, type: type } : field,
       ),
     );
   }
 
-  const handleDelete= ({id}:{id: number}) => {
+  const handleDelete = ({ id }: { id: number }) => {
     setFields((prevFields) =>
       prevFields.filter((field) =>
-        field.id != id 
+        field.id != id
       ),
     );
   }
@@ -78,7 +78,8 @@ const [isOpen,setIsOpen] = useState(false)
   }
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    mutate({projectId:formData.projectId,name:formData.formName,formSchema:formData.formDataSchema})
+    mutate({ projectId: formData.projectId, name: formData.formName, formSchema: formData.formDataSchema })
+    setFields([{ id: 1, value: "", type: "text" }])
     setIsOpen(false)
   }
   const handleSelect = (value: string) => {
@@ -95,11 +96,11 @@ const [isOpen,setIsOpen] = useState(false)
               <div className="flex flex-col gap-7">
                 <div>
                   <Label>Form Name</Label>
-                  <Input placeholder="Form name" className="mt-5" id="formName" name="formName" value={formData.formName} onChange={handleChange} required/>
+                  <Input placeholder="Form name" className="mt-5" id="formName" name="formName" value={formData.formName} onChange={handleChange} required />
                 </div>
                 <div>
                   <Label>Select Project</Label>
-                  <SelectProject handleState={handleSelect}  />
+                  <SelectProject handleState={handleSelect} />
                   <br />
                   <div className="my-5">
                   </div>
@@ -107,7 +108,7 @@ const [isOpen,setIsOpen] = useState(false)
                     Add Field
                   </Button>
                   <div className="ele max-h-[400px] overflow-y-scroll my-5">
-                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} handleDelete={handleDelete}/>
+                    <DynamicForm fields={fields} handleInputChange={handleInputChange} handleSelectChange={handleSelectChange} handleDelete={handleDelete} />
                   </div>
                 </div>
                 <Button>Create</Button>

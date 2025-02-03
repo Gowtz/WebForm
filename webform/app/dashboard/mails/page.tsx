@@ -1,9 +1,8 @@
-import { EmailList } from "@/components/dashboard/mails/EmailList";
 
 export default function page() {
   return (
     <div>
-      <EmailList />
+      <h1>Mail Services are yet to come</h1>
     </div>
   )
 }

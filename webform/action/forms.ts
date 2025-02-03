@@ -1,5 +1,4 @@
 "use server"
-const BACKEND_URL = process.env.BACKEND_URL
 import { prisma } from "@/lib/prismaclient"
 import { getServersideUser } from "./projects"
 import { generateRandomString } from "@/lib/utils"
@@ -8,55 +7,81 @@ import { revalidatePath } from "next/cache"
 // TODO:Add pagination
 export const getAllForms = async () => {
   const user = await getServersideUser()
-  if (user) {
+  if (!user?.id) {
+    return { error: `UNAUTHORIZED`, errordescription: "Not authenticated" }
+  }
+  try {
     const forms = await prisma.form.findMany({
       where: {
-        userId: user?.id
+        userId: user.id
       },
       include: {
         project: true,
-        api:true
+        api: true
       }, orderBy: {
         createdAt: 'asc'
       }
     })
-    return forms
+    return { data: forms }
+  } catch (error) {
+    return { error: `There was an error`, errordescription: error }
   }
+
 }
 
 
 export const toggleActiveForm = async ({ isActive, formId }: { isActive: boolean, formId: string }) => {
   const user = await getServersideUser()
   if (user) {
-    await prisma.form.update({
-      where: {
-        id: formId
-      },
-      data: {
-        isActive
-      },
+    try {
 
-    })
-    revalidatePath('/dashboard/forms')
+      await prisma.form.update({
+        where: {
+          id: formId
+        },
+        data: {
+          isActive
+        },
+
+      })
+      revalidatePath('/dashboard/forms')
+    } catch (error) {
+      console.log("There was a error in toogleActiveForm", error)
+    }
   }
 }
 
 export const deleteForm = async ({ formId }: { formId: string }) => {
   const user = await getServersideUser();
   if (user) {
-    const form = await prisma.form.delete({
-      where: {
-        id: formId
-      },
-    })
-    revalidatePath('/dashboard/forms')
-    return form
+    try {
+
+      const form = await prisma.form.delete({
+        where: {
+          id: formId
+        },
+      })
+      revalidatePath('/dashboard/forms')
+      return { data: form }
+    } catch (error) {
+      return { error: "There was as error while performing delete form", errordescription: error }
+    }
   }
 }
+
 
 export const createForm = async ({ projectId, name, formSchema }: { projectId: string, name: string, formSchema: string }) => {
   const user = await getServersideUser()
   if (user) {
+    const formCount = await prisma.form.count({
+      where: {
+        userId: user.id
+      }
+    })
+    if (formCount >= 10) {
+
+      return { error: "FORM_LIMIT_REACHED", errordescription: "You have reached the form limit for your plan." }
+    }
     const secret = generateRandomString()
     const API = await prisma.api.create({
       data: {
@@ -71,10 +96,9 @@ export const createForm = async ({ projectId, name, formSchema }: { projectId: s
         projectId,
         formSchema,
         name,
-        apiId:API.id
+        apiId: API.id
       }
     })
-
     revalidatePath('/dashboard/forms')
     return project
   }
@@ -95,7 +119,6 @@ export const editForm = async ({ projectId, name, formSchema, formId }: { formId
         name,
       }
     })
-
     revalidatePath('/dashboard/forms')
     return project
   }

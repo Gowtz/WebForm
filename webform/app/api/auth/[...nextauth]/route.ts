@@ -18,7 +18,12 @@ const authOptions : NextAuthOptions = {
   //   signOut:"/signout",
   //   newUser:"/onboard"
   // },
-
+callbacks:{
+async signIn(user){
+      console.log(user)
+      return true
+    }
+},
   session:{
     strategy:"jwt"
   },

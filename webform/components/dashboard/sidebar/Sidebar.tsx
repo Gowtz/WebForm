@@ -4,7 +4,6 @@ import {
   ChartLine,
   Mail,
   NotepadText,
-  Server,
 } from "lucide-react";
 import {
   Sidebar,
@@ -46,11 +45,11 @@ const items = [
     url: "/dashboard/mails",
     icon: Mail,
   },
-  {
-    title: "Email Services",
-    url: "/dashboard/email-services",
-    icon: Server,
-  },
+  // {
+  //   title: "Email Services",
+  //   url: "/dashboard/email-services",
+  //   icon: Server,
+  // },
 ];
 
 export function AppSidebar() {

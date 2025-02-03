@@ -10,10 +10,11 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 
 export default function Form() {
   const params = useSearchParams()
-  const { forms: data, fetchForms, projects } = useStore()
+  const { forms: data, fetchForms, projects ,fetchProjects} = useStore()
   useEffect(() => {
     fetchForms()
-  }, [fetchForms])
+    fetchProjects()
+  }, [fetchForms,fetchProjects])
   const [filter, setFilter] = useState(params.get('filter') || "")
   function handFilterChange(val: string) {
     setFilter(val)

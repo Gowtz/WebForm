@@ -12,8 +12,10 @@ export const useStore = create<Store>((set) => ({
   projects: null,
   forms: null,
   fetchForms: async () => {
-    const forms = await getAllForms()
-    set({ forms })
+    const {data:forms} = await getAllForms()
+    if(forms){
+      set({forms})
+    }
   },
   fetchProjects: async () => {
     const projects = await getAllProject()
