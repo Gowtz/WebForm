@@ -19,7 +19,7 @@ export default async function Page({ params }: { params: Promise<{ formid: strin
       <div>
         <div className="flex gap-14 items-center mb-14">
           <h2 className="font-semibold">Your Api Key is </h2>
-          <p className="bg-slate-100 rounded-lg py-1 px-3">{apiKey.data && apiKey.data}</p>
+          <p className="bg-slate-100 dark:bg-zinc-800 rounded-lg py-1 px-3">{apiKey.data && apiKey.data}</p>
         </div>
 
       </div>
