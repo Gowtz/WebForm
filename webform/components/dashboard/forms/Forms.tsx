@@ -27,6 +27,7 @@ export default function Forms({ forms }: { forms: FormType[] }) {
         {forms?.map((form: FormType) => (
           <li key={form.id}  className="h-16 flex justify-between px-6 items-center  ">
             <Link href={`/dashboard/forms/${form.id}`}>
+
               <h3 className="mx-5 font-bold text-xl ">{capitalizeFirstLetter(form.name)}</h3>
             </Link>
               <div className="flex items-center gap-5">

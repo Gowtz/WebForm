@@ -120,6 +120,8 @@ model FormData {
   apiId String
   data  String
   api   Api    @relation(fields: [apiId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt()
 }
 
 model Subscription {

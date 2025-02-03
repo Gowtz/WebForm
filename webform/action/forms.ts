@@ -29,7 +29,28 @@ export const getAllForms = async () => {
 
 }
 
+export const showApiKey = async ()=>{
+  try {
+    
+    const user = await getServersideUser()
+    if(!user?.id){
+    return { error: `UNAUTHORIZED`, errordescription: "Not Authenticated"}
+    }
+    const api = await prisma.api.findFirst({
+      where:{
+        userId:user.id
+      },
+      include:{
+        project:true,
+        Form:true
+      }
+    })
+    return { data : api?.secret}
 
+  } catch (error) {
+    return { error: `There was an error`, errordescription: error }
+  }
+}
 export const toggleActiveForm = async ({ isActive, formId }: { isActive: boolean, formId: string }) => {
   const user = await getServersideUser()
   if (user) {
@@ -75,7 +96,7 @@ export const createForm = async ({ projectId, name, formSchema }: { projectId: s
   if (user) {
     const formCount = await prisma.form.count({
       where: {
-        userId: user.id
+        userId: user.id,
       }
     })
     if (formCount >= 10) {

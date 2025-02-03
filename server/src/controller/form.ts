@@ -29,6 +29,8 @@ export const formSubmit = async (req: Request, res: Response) => {
       if (!api) {
         throw new Error("The API key is not valid")
       }
+      console.log(api);
+      
 
       // Checking with registered url
       if (headers.origin !== api?.project.webURL) {
