@@ -7,7 +7,7 @@ export default function SignIn() {
     <div className="w-full h-screen max-h-screen block lg:flex ">
       <div className="w-full h-full p-5 hidden lg:block">
         <div className="w-full h-full  rounded-3xl overflow-hidden relative ">
-          <Image src={'/dashboard-dark.png'} alt="dummy" fill className="object-cover" />
+          <Image src={'/Signin.jpg'} alt="dummy" fill className="object-cover" />
         </div>
       </div>
       <div className="w-full h-full ">
