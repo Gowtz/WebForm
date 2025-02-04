@@ -10,7 +10,7 @@ export default function Card() {
         strategy="afterInteractive" // Load after the page is interactive
       />
       <div className="flex items-center justify-center" data-tilt>
-        <Image src={"/dashboard-dark.png"} alt="dashboard" width={1000} height={700} />
+        <Image src={"/background.jpg"} alt="dashboard" width={1000} height={700} />
       </div>
     </div>
   );
