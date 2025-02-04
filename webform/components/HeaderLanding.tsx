@@ -62,7 +62,7 @@ export default function Header() {
             </div>
           }
         </div>
-        <Menu className="cursor-pointer border  rounded p-1  border-black dark:border-white" size={32} onClick={()=>setOpen(prev => !prev)}/>
+        <Menu className="cursor-pointer border  rounded p-1  border-black dark:border-white md:hidden block" size={32} onClick={()=>setOpen(prev => !prev)}/>
       </nav>
       <div className={`${open ? 'block' : 'hidden'} md:hidden `}>
         <div className="navlinks absolute top-20 left-0 w-full p-10  bg-black bg-opacity-5 dark:bg-opacity-40 backdrop-blur-2xl">
