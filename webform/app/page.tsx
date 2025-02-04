@@ -10,17 +10,17 @@ export default async function Home() {
   return (
     <div className="mx-auto ">
       <Header />
-      <div className="hero relativeh h-[700px] w-full flex flex-col items-center justify-center gap-3">
-        <h1 className="text-6xl font-semibold text-center">Effortless Form Handling for Static Websites</h1>
-        <h3 className="text-2xl text-neutral-500">No more backend headaches. Collect, manage, and respond to form submissions—all in one place</h3>
+      <div className="hero relativeh h-[700px] w-full flex flex-col items-center justify-center gap-3 px-5">
+        <h1 className="text-2xl md:text-6xl font-semibold text-center">Effortless Form Handling for Static Websites</h1>
+        <h3 className="text-md md:text-2xl text-neutral-500 text-center">No more backend headaches. Collect, manage, and respond to form submissions—all in one place</h3>
         <div className="cta flex gap-5 mt-10">
           <ButtonsLanding />
         </div>
       </div>
       <Card />
       <div className="relative min-h-screen ">
-        <div className="features my-20 flex justify-between max-w-[1400px] mx-auto " id="about">
-          <h2 className="text-center text-8xl mb-10 ml-16">Features</h2>
+        <div className="features my-20 flex flex-col md:flex-row justify-between max-w-[1400px] mx-auto " id="about">
+          <h2 className="text-center text-3xl lg:text-8xl mb-10 md:ml-16">Features</h2>
           <div className="flex flex-col justify-between gap-10">
             <div className="tab">
               <h3>One Dashboard,Full Controll</h3>
@@ -38,8 +38,8 @@ export default async function Home() {
           </div>
         </div>
 
-        <div className="workings my-40 flex flex-row-reverse justify-between max-w-[1200px] mx-auto">
-          <h2 className="text-center text-8xl mb-10">How it works</h2>
+        <div className="workings my-40 flex flex-col md:flex-row-reverse justify-between max-w-[1200px] mx-auto">
+          <h2 className="text-center text-2xl xl:text-8xl mb-10">How it works</h2>
           <div className="flex flex-col justify-between gap-10">
             <div className="tab">
               <h3>Add Your Form Endpoint</h3>
@@ -69,7 +69,7 @@ export default async function Home() {
       <div className="relative plans mb-32" id="pricing">
         <TooltipProvider>
           <h2 className="text-center text-4xl mt-32">What About Plans</h2>
-          <div className="relative flex justify-center gap-20 mt-40">
+          <div className="relative flex flex-col lg:flex-row items-center justify-center gap-20 mt-40">
             <div className="card smalScale">
               <h3>Starter</h3>
               <h4><span>Free</span> </h4>

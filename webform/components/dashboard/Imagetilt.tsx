@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function Card() {
 
     return (
-    <div className=" mx-auto  overflow-hidden " >
+    <div className=" mx-auto  overflow-hidden px-10" >
       <Script
         src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/dist/vanilla-tilt.min.js"
         strategy="afterInteractive" // Load after the page is interactive
