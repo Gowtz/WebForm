@@ -1,3 +1,4 @@
+import ButtonsLanding from "@/components/ButtonsLanding";
 import Card from "@/components/dashboard/Imagetilt";
 import Header from "@/components/HeaderLanding";
 import { Button } from "@/components/ui/button";
@@ -9,22 +10,15 @@ export default async function Home() {
   return (
     <div className="mx-auto ">
       <Header />
-
       <div className="hero relativeh h-[700px] w-full flex flex-col items-center justify-center gap-3">
         <h1 className="text-6xl font-semibold text-center">Effortless Form Handling for Static Websites</h1>
         <h3 className="text-2xl text-neutral-500">No more backend headaches. Collect, manage, and respond to form submissions—all in one place</h3>
         <div className="cta flex gap-5 mt-10">
-          <Button variant={'default'}>Get Started </Button>
-          <Button variant={'secondary'}>Know More</Button>
+          <ButtonsLanding />
         </div>
-
       </div>
-
       <Card />
-
-
       <div className="relative min-h-screen ">
-
         <div className="features my-20 flex justify-between max-w-[1400px] mx-auto " id="about">
           <h2 className="text-center text-8xl mb-10 ml-16">Features</h2>
           <div className="flex flex-col justify-between gap-10">
@@ -106,7 +100,7 @@ export default async function Home() {
                     Sorry Payment will implement Soon
                   </TooltipContent>
                   <TooltipTrigger>
-                    <Button className="my-5 w-full cursor-not-allowed" >Start 14 Days free trail</Button>
+                    <div className=" inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 my-5 w-full cursor-not-allowed" >Start 14 Days free trail</div>
                   </TooltipTrigger>
                 </Tooltip>
               </div>
@@ -128,7 +122,7 @@ export default async function Home() {
                     Sorry Payment will implement Soon
                   </TooltipContent>
                   <TooltipTrigger>
-                    <Button className="my-5 w-full cursor-not-allowed" >Start 14 Days free trail</Button>
+                    <div className=" inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 my-5 w-full cursor-not-allowed" >Start 14 Days free trail</div>
                   </TooltipTrigger>
                 </Tooltip>
               </div>
